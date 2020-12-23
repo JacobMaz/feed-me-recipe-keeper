@@ -1,7 +1,7 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@material-ui/core/styles'
-import { Container } from '@material-ui/core'
-import SignUpIndex from './SignUpIndex';
+import {createStyles, makeStyles} from '@material-ui/core/styles';
+import {Container} from '@material-ui/core';
+import LoginIndex from './LoginIndex';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -16,17 +16,17 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-const SignUp = () => {
+const Login =()=>{
     const classes = useStyles();
 
-    return (
+    return(
         <Container className={classes.container}>
             <div>
-                <h1>SIGN UP</h1>
-                <SignUpIndex />
+                <h1>LOG IN</h1>
+                <LoginIndex />
             </div>
         </Container>
     )
 }
 
-export default SignUp;
+export default Login;
