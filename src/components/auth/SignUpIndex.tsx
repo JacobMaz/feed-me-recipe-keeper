@@ -25,35 +25,35 @@ export default class SignUpIndex extends Component<{}, SignUpState>{
         this.setState({
             firstName: (e)
         })
-        console.log('firstName', this.state.firstName)
+        // console.log('firstName', this.state.firstName)
     }
 
     setLastName(e: any) {
         this.setState({
             lastName: (e)
         })
-        console.log('lastName', this.state.lastName)
+        // console.log('lastName', this.state.lastName)
     }
 
     setUserName(e: any) {
         this.setState({
             userName: (e)
         })
-        console.log('userName', this.state.userName)
+        // console.log('userName', this.state.userName)
     }
 
     setEmail(e: any) {
         this.setState({
             email: (e)
         })
-        console.log('email', this.state.email)
+        // console.log('email', this.state.email)
     }
 
     setPassword(e: any) {
         this.setState({
             password: (e)
         })
-        console.log('password', this.state.password)
+        // console.log('password', this.state.password)
     }
 
     signUpUser(e: any) {
