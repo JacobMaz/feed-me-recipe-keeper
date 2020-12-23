@@ -1,5 +1,7 @@
+import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { Container } from '@material-ui/core'
+import SignUpIndex from './SignUpIndex';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -7,23 +9,24 @@ const useStyles = makeStyles(() =>
             marginTop: '5em',
             backgroundColor: 'gray',
             display: 'flex',
-                justifyContent: 'center',
-                alignContent: 'center',
+            justifyContent: 'center',
+            alignContent: 'center',
             height: '100%'
         }
     }),
 );
 
-const Home = () => {
+const SignUp = () => {
     const classes = useStyles();
 
     return (
         <Container className={classes.container}>
             <div>
-                <h1>HOME</h1>
+                <h1>Sign Up</h1>
+                <SignUpIndex />
             </div>
         </Container>
     )
 }
 
-export default Home;
+export default SignUp;

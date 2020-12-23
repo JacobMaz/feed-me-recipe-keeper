@@ -1,7 +1,9 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles'
-import { AppBar, Button, Toolbar } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid'
+import { AppBar, Toolbar } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Auth from './auth/Auth';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -9,13 +11,6 @@ const useStyles = makeStyles(() =>
             display: 'flex',
             justifyContent: 'flex-end'
         },
-        buttonsDiv: {
-            backgroundColor: 'black',
-        },
-        button: {
-            backgroundColor: 'gray',
-            margin: '2px'
-        }
     }),
 );
 
@@ -26,13 +21,12 @@ const NavbBar = () => {
         <AppBar position='fixed'>
             <Toolbar>
                 <Grid container spacing={3}>
-                    <Grid item xs></Grid>
+                    <Grid item xs>
+                        <Link to='home'>Home</Link>
+                    </Grid>
                     <Grid item xs={6}></Grid>
                     <Grid item xs className={classes.logSignButtons}>
-                        <div className={classes.buttonsDiv}>
-                            <Button className={classes.button} >Login</Button>
-                            <Button className={classes.button} >Sign In</Button>
-                        </div>
+                        <Auth />
                     </Grid>
                 </Grid>
             </Toolbar>

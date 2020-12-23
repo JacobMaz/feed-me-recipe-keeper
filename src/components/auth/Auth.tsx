@@ -1,15 +1,13 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const Auth = () => {
     return (
-        <React.Fragment>
-            <Router>
-                <Switch>
-                    {/* <Route exact path='./auth/auth' componet={} /> */}
-                </Switch>
-            </Router>
-        </React.Fragment>
+        <div>
+            <div>
+                <Link to='/signup'>Sign Up</Link>
+            </div>
+        </div>
     )
 }
 

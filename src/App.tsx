@@ -1,12 +1,14 @@
 import React from 'react';
 // import './App.css';
-import Home from './components/Home';
+import Main from './components/Main';
 
 function App() {
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <React.Fragment>
+      <div className='app'>
+        <Main />
+      </div>
+    </React.Fragment>
   );
 }
 
