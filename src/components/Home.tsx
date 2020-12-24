@@ -4,12 +4,12 @@ import { Container } from '@material-ui/core'
 const useStyles = makeStyles(() =>
     createStyles({
         container: {
-            marginTop: '5em',
+            // marginTop: '5em',
             backgroundColor: 'gray',
             display: 'flex',
                 justifyContent: 'center',
                 alignContent: 'center',
-            height: '100%'
+            height: '100vh'
         }
     }),
 );
