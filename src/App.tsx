@@ -1,13 +1,10 @@
 import React from 'react';
-import './App.css';
-import Main from './components/Main';
+import AppIndex from './AppIndex';
 
 function App() {
   return (
     <React.Fragment>
-      <div className='app'>
-        <Main />
-      </div>
+      <AppIndex />
     </React.Fragment>
   );
 }
