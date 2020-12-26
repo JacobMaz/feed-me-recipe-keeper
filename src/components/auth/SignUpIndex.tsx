@@ -9,7 +9,7 @@ type SignUpState = {
     password: string,
 }
 
-export default class SignUpIndex extends Component<{}, SignUpState>{
+export default class SignUpIndex extends Component<any, SignUpState>{
     constructor(props: any) {
         super(props)
         this.state = {
@@ -19,6 +19,7 @@ export default class SignUpIndex extends Component<{}, SignUpState>{
             email: '',
             password: '',
         }
+        // this.updateToken = this.props.updateToken.bind(this)
     }
 
     setFirstName(e: any) {
@@ -71,7 +72,10 @@ export default class SignUpIndex extends Component<{}, SignUpState>{
                 'Content-Type': 'application/json'
             })
         }).then((response) => response.json())
-            .then((data) => console.log(data))
+            .then((data) => {
+                this.props.updateToken(data.token)
+               console.log(data.token)
+            })
     }
 
     render() {
