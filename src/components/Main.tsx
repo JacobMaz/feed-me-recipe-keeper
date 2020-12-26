@@ -21,7 +21,7 @@ const useStyles = makeStyles(()=>
     })
 )
 
-const Main = () => {
+const Main = (props: any) => {
     const classes = useStyles();
 
     return (
@@ -30,12 +30,12 @@ const Main = () => {
                     <div className={classes.mainDiv}>
                      <NavbBar />
                     <Switch>
-                        <Route exaft path='/home' component={Home} />
-                        <Route exact path='/signup' component={SignUp} />
+                        <Route exact path='/home' component={Home} />
+                        <Route exact path='/signup' render={()=>(<SignUp updateToken={props.updateToken} />)} />
                         <Route exact path='/login' component={Login} />
                     </Switch>
                     <div className={classes.bottomNavDiv}>
-                        <BottomNav />  
+                        <BottomNav />
                     </div>
                     </div>
                 </Router>
