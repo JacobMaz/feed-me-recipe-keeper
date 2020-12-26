@@ -21,7 +21,11 @@ const useStyles = makeStyles(()=>
     })
 )
 
-const Main = (props: any) => {
+type Props = {
+    updateToken(arg: string): void
+}
+
+const Main = (props: Props) => {
     const classes = useStyles();
 
     return (

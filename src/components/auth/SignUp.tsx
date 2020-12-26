@@ -16,7 +16,11 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-const SignUp = (props: any) => {
+type Props = {
+    updateToken(arg: string): void
+}
+
+const SignUp = (props: Props) => {
     const classes = useStyles();
 
     return (
