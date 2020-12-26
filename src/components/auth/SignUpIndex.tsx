@@ -9,6 +9,10 @@ type SignUpState = {
     password: string,
 }
 
+// interface Props {
+//     updateToken(arg: string): any
+// }
+
 export default class SignUpIndex extends Component<any, SignUpState>{
     constructor(props: any) {
         super(props)

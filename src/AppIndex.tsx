@@ -18,9 +18,9 @@ export default class AppIndex extends Component<{}, AppState>{
     }
 
     updateToken(newToken: string){
-        // this.setState({
-        //     token: newToken
-        // })
+        this.setState({
+            token: newToken
+        })
         console.log(this.state.token)
     }
 
