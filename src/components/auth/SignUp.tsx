@@ -16,14 +16,14 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-const SignUp = () => {
+const SignUp = (props: any) => {
     const classes = useStyles();
 
     return (
         <Container className={classes.container}>
             <div>
                 <h1>SIGN UP</h1>
-                <SignUpIndex />
+                <SignUpIndex updateToken={props.updateToken} />
             </div>
         </Container>
     )
