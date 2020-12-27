@@ -7,6 +7,7 @@ import BottomNav from './BottomNav'
 import SignUp from './auth/SignUp'
 import Home from './Home';
 import Login from './auth/Login';
+import CreateRecipe from './recipe/CreateRecipe';
 
 const useStyles = makeStyles(()=>
     createStyles({
@@ -37,6 +38,7 @@ const Main = (props: Props) => {
                         <Route exact path='/home' component={Home} />
                         <Route exact path='/signup' render={()=>(<SignUp updateToken={props.updateToken} />)} />
                         <Route exact path='/login' component={Login} />
+                        <Route exact path='/createRecipe' render={()=>(<CreateRecipe />)} />
                     </Switch>
                     <div className={classes.bottomNavDiv}>
                         <BottomNav />
