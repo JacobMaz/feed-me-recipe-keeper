@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {BottomNavigation, BottomNavigationAction} from '@material-ui/core';
 import {AddCircleOutline} from '@material-ui/icons';
-
-
+import {Link} from 'react-router-dom';
 
 class BottomNav extends Component{
     state={
@@ -18,7 +17,9 @@ class BottomNav extends Component{
 
         return(
             <BottomNavigation value={value} onChange={this.handleChange} showLabels >
-                <BottomNavigationAction label='Add Recipe' icon={<AddCircleOutline />} />
+                <Link to='/createRecipe'>
+                    <BottomNavigationAction label='Add Recipe' icon={<AddCircleOutline />} showLabel />
+                </Link>
             </BottomNavigation>
         )
     }
