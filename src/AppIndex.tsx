@@ -23,7 +23,7 @@ export default class AppIndex extends Component<{}, AppState>{
             token: newToken
         })
         console.log('tokenState: ', this.state.token)
-        console.log(localStorage.getItem('token'))
+        console.log('Local Storage Token: ', localStorage.getItem('token'))
     }
 
     render() {
