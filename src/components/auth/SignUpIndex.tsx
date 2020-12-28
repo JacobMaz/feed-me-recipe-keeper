@@ -78,7 +78,7 @@ export default class SignUpIndex extends Component<Props, SignUpState>{
         }).then((response) => response.json())
             .then((data) => {
                 this.props.updateToken(data.token)
-               console.log(data.token)
+            //    console.log(data.token)
             })
     }
 

@@ -18,10 +18,12 @@ export default class AppIndex extends Component<{}, AppState>{
     }
 
     updateToken = (newToken: string)=> {
+        localStorage.setItem('token', newToken)
         this.setState({
             token: newToken
         })
-        console.log(this.state.token)
+        console.log('tokenState: ', this.state.token)
+        console.log(localStorage.getItem('token'))
     }
 
     render() {
