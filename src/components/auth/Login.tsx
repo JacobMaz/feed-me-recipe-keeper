@@ -16,14 +16,18 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-const Login =()=>{
+interface Props {
+    updateToken: (newToken: string) => void
+}
+
+const Login =(props: Props)=>{
     const classes = useStyles();
 
     return(
         <Container className={classes.container}>
             <div>
                 <h1>LOG IN</h1>
-                <LoginIndex />
+                <LoginIndex updateToken={props.updateToken} />
             </div>
         </Container>
     )

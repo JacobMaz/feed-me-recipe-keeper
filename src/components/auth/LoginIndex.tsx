@@ -6,7 +6,11 @@ type LoginState = {
     password: string
 }
 
-export default class LoginIndex extends Component<{}, LoginState>{
+interface Props {
+    updateToken: (newToken: string) => void
+}
+
+export default class LoginIndex extends Component<Props, LoginState>{
     constructor(props: any){
         super(props)
         this.state ={
@@ -39,7 +43,9 @@ export default class LoginIndex extends Component<{}, LoginState>{
                 'Content-Type': 'application/json'
             })
         }).then((response)=> response.json())
-            .then((data)=> console.log(data))
+            .then((data)=> {
+                this.props.updateToken(data.token)
+            })
     }
 
     render() {
