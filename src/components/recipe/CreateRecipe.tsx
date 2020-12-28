@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { Container } from '@material-ui/core'
-import SignUpIndex from './SignUpIndex';
+import CreateRecipeIndex from './CreateRecipeIndex';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -16,21 +16,17 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-interface Props {
-    updateToken: (newToken: string) => void
-}
-
-const SignUp = (props: Props) => {
+const CreateRecipe = () => {
     const classes = useStyles();
 
     return (
-        <Container className={classes.container}>
+        <Container className={classes.container} >
             <div>
-                <h1>SIGN UP</h1>
-                <SignUpIndex updateToken={props.updateToken} />
+                <h1>Create Recipe</h1>
+                <CreateRecipeIndex />
             </div>
         </Container>
     )
 }
 
-export default SignUp;
+export default CreateRecipe;

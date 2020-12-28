@@ -9,8 +9,8 @@ type SignUpState = {
     password: string,
 }
 
-type Props = {
-    updateToken(arg: string): void
+interface Props {
+    updateToken: (newToken: string) => void
 }
 
 export default class SignUpIndex extends Component<Props, SignUpState>{
@@ -78,7 +78,7 @@ export default class SignUpIndex extends Component<Props, SignUpState>{
         }).then((response) => response.json())
             .then((data) => {
                 this.props.updateToken(data.token)
-               console.log(data.token)
+            //    console.log(data.token)
             })
     }
 
