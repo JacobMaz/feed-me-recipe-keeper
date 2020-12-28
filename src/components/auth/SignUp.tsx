@@ -16,8 +16,8 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-type Props = {
-    updateToken(arg: string): void
+interface Props {
+    updateToken: (newToken: string) => void
 }
 
 const SignUp = (props: Props) => {

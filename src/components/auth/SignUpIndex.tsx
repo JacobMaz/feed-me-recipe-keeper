@@ -9,8 +9,8 @@ type SignUpState = {
     password: string,
 }
 
-type Props = {
-    updateToken(arg: string): void
+interface Props {
+    updateToken: (newToken: string) => void
 }
 
 export default class SignUpIndex extends Component<Props, SignUpState>{

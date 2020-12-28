@@ -17,7 +17,7 @@ export default class AppIndex extends Component<{}, AppState>{
         console.log('componentDidMount: ', this.state.token)
     }
 
-    updateToken(newToken: string){
+    updateToken = (newToken: string)=> {
         this.setState({
             token: newToken
         })
