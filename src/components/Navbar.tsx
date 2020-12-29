@@ -14,7 +14,11 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-const NavbBar = () => {
+interface Props {
+    clearToken:() => void
+}
+
+const NavbBar = (props: Props) => {
     const classes = useStyles();
 
     return (
@@ -26,7 +30,7 @@ const NavbBar = () => {
                     </Grid>
                     <Grid item xs={6}></Grid>
                     <Grid item xs className={classes.logSignButtons}>
-                        <Auth />
+                        <Auth clearToken={props.clearToken} />
                     </Grid>
                 </Grid>
             </Toolbar>

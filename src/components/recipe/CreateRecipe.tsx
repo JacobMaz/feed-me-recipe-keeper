@@ -16,14 +16,18 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-const CreateRecipe = () => {
+interface Props {
+    token: string
+}
+
+const CreateRecipe = (props: Props) => {
     const classes = useStyles();
 
     return (
         <Container className={classes.container} >
             <div>
                 <h1>Create Recipe</h1>
-                <CreateRecipeIndex />
+                <CreateRecipeIndex token={props.token} />
             </div>
         </Container>
     )

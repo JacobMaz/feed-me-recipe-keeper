@@ -23,7 +23,9 @@ const useStyles = makeStyles(()=>
 )
 
 interface Props {
-    updateToken:(newToken: string) =>void
+    updateToken:(newToken: string) =>void,
+    clearToken:() => void,
+    token: string
 }
 
 const Main = (props: Props) => {
@@ -33,12 +35,12 @@ const Main = (props: Props) => {
             <React.Fragment>
                 <Router>
                     <div className={classes.mainDiv}>
-                     <NavbBar />
+                     <NavbBar clearToken={props.clearToken} />
                     <Switch>
                         <Route exact path='/home' component={Home} />
                         <Route exact path='/signup' render={()=>(<SignUp updateToken={props.updateToken} />)} />
                         <Route exact path='/login' render={()=>(<Login updateToken={props.updateToken} />)} />
-                        <Route exact path='/createRecipe' render={()=>(<CreateRecipe />)} />
+                        <Route exact path='/createRecipe' render={()=>(<CreateRecipe token={props.token} />)} />
                     </Switch>
                     <div className={classes.bottomNavDiv}>
                         <BottomNav />
