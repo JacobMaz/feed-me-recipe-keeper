@@ -17,17 +17,27 @@ export default class AppIndex extends Component<{}, AppState>{
         console.log('componentDidMount: ', this.state.token)
     }
 
-    updateToken(newToken: string){
+    updateToken = (newToken: string)=> {
+        localStorage.setItem('token', newToken)
         this.setState({
             token: newToken
         })
-        console.log(this.state.token)
+        console.log('tokenState: ', this.state.token)
+        console.log('Local Storage Token: ', localStorage.getItem('token'))
+    }
+
+    clearToken = ()=> {
+        localStorage.clear();
+        this.setState({
+            token: ''
+        })
+        console.log('token cleared: ', this.state.token)
     }
 
     render() {
         return (
             <div className='app'>
-                <Main updateToken={this.updateToken} />
+                <Main updateToken={this.updateToken} token={this.state.token} clearToken={this.clearToken} />
             </div>
         )
     }

@@ -9,7 +9,11 @@ type RecipeState = {
     directions: string
 }
 
-export default class CreateRecipeIndex extends Component<{}, RecipeState>{
+interface Props {
+    token: string
+}
+
+export default class CreateRecipeIndex extends Component<Props, RecipeState>{
     constructor(props: any){
         super(props)
         this.state ={
@@ -63,7 +67,8 @@ export default class CreateRecipeIndex extends Component<{}, RecipeState>{
                 directions: this.state.directions
             }),
             headers: new Headers({
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': this.props.token
             })
         }).then((response)=> response.json())
             .then((data)=>{
