@@ -13,9 +13,9 @@ export default class AppIndex extends Component<{}, AppState>{
         }
     }
 
-    componentDidMount(){
-        console.log('componentDidMount: ', this.state.token)
-    }
+    // componentDidMount(){
+    //     console.log('componentDidMount: ', this.state.token)
+    // }
 
     updateToken = (newToken: string)=> {
         localStorage.setItem('token', newToken)
