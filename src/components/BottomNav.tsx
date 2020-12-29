@@ -16,17 +16,13 @@ class BottomNav extends Component{
         const {value} = this.state;
 
         return(
-            <BottomNavigation value={value} onChange={this.handleChange} showLabels >
+            <BottomNavigation value={value} onChange={this.handleChange}>
                 <Link to='/createRecipe'>
-                    <BottomNavigationAction label='Add Recipe' icon={<AddCircleOutline />} showLabel />
+                    <BottomNavigationAction label='Add Recipe' showLabel icon={<AddCircleOutline />} />
                 </Link>
             </BottomNavigation>
         )
     }
 }
-
-// BottomNav.propTypes = {
-//     classes: PropTypes.object.isRequired
-// }
 
 export default BottomNav;
