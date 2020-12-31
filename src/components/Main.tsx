@@ -8,6 +8,7 @@ import SignUp from './auth/SignUp'
 import Home from './Home';
 import Login from './auth/Login';
 import CreateRecipe from './recipe/CreateRecipe';
+import GetRecipeIndex from './recipe/GetRecipeIndex';
 
 const useStyles = makeStyles(()=>
     createStyles({
@@ -37,10 +38,11 @@ const Main = (props: Props) => {
                     <div className={classes.mainDiv}>
                      <NavbBar clearToken={props.clearToken} />
                     <Switch>
-                        <Route exact path='/home' component={Home} />
+                        <Route exact path='/home' render={()=>(<Home />)} />
                         <Route exact path='/signup' render={()=>(<SignUp updateToken={props.updateToken} />)} />
                         <Route exact path='/login' render={()=>(<Login updateToken={props.updateToken} />)} />
                         <Route exact path='/createRecipe' render={()=>(<CreateRecipe token={props.token} />)} />
+                        <Route exact path='/getRecipe' render={()=>(<GetRecipeIndex />)} />
                     </Switch>
                     <div className={classes.bottomNavDiv}>
                         <BottomNav />
