@@ -3,13 +3,15 @@ import Main from './components/Main';
 
 type AppState = {
     token: string
+    recipeRes: any
 }
 
 export default class AppIndex extends Component<{}, AppState>{
     constructor(props: any){
         super(props)
         this.state = {
-            token: ''
+            token: '',
+            recipeRes: []
         }
     }
 
