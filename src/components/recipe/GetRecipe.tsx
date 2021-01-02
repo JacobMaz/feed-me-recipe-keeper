@@ -45,14 +45,12 @@ const GetRecipe = (props: any) => {
     const handleExpandClick=()=>{
         setExpanded(!expanded);
     };
-
-
     
     return (
         <Container className={classes.container} >
             <h1>All Recipes</h1>
-            {props.recipeResponse.length > 0 && props.recipeResponse.map((recipe: any) => 
-               <div>
+            {props.recipeResponse.length > 0 && props.recipeResponse.map((recipe: any, index: any) => 
+               <div key={index}>
                 <Card className={classes.root}>
                     <CardHeader avatar={<Avatar aria-label='recipe'>
                         R
