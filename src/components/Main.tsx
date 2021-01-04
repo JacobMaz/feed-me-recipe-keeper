@@ -8,7 +8,8 @@ import SignUp from './auth/SignUp'
 import Home from './Home';
 import Login from './auth/Login';
 import CreateRecipe from './recipe/CreateRecipe';
-import GetRecipeIndex from './recipe/GetRecipeIndex';
+import GetRecipe from './recipe/GetRecipeIndex';
+import UserRecipes from './recipe/UserRecipesIndex';
 
 const useStyles = makeStyles(()=>
     createStyles({
@@ -26,11 +27,15 @@ const useStyles = makeStyles(()=>
 interface Props {
     updateToken:(newToken: string) =>void,
     clearToken:() => void,
-    token: string
+    token: string | null
 }
 
 const Main = (props: Props) => {
     const classes = useStyles();
+
+    const bottomNavHandle = () => {
+        return props.token === '' ? null : <BottomNav />
+    }
 
     return (
             <React.Fragment>
@@ -42,10 +47,11 @@ const Main = (props: Props) => {
                         <Route exact path='/signup' render={()=>(<SignUp updateToken={props.updateToken} />)} />
                         <Route exact path='/login' render={()=>(<Login updateToken={props.updateToken} />)} />
                         <Route exact path='/createRecipe' render={()=>(<CreateRecipe token={props.token} />)} />
-                        <Route exact path='/getRecipe' render={()=>(<GetRecipeIndex />)} />
+                        <Route exact path='/getRecipe' render={()=>(<GetRecipe />)} />
+                        <Route exact path='/userRecipes' render={()=>(<UserRecipes token={props.token} />)} />
                     </Switch>
                     <div className={classes.bottomNavDiv}>
-                        <BottomNav />
+                        {bottomNavHandle()}
                     </div>
                     </div>
                 </Router>

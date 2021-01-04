@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Main from './components/Main';
 
 type AppState = {
-    token: string
+    token: string | null
     recipeRes: any
 }
 
@@ -10,14 +10,10 @@ export default class AppIndex extends Component<{}, AppState>{
     constructor(props: any){
         super(props)
         this.state = {
-            token: '',
+            token: localStorage.getItem('token') ? localStorage.getItem('token') : '' ,
             recipeRes: []
         }
     }
-
-    // componentDidMount(){
-    //     console.log('componentDidMount: ', this.state.token)
-    // }
 
     updateToken = (newToken: string)=> {
         localStorage.setItem('token', newToken)

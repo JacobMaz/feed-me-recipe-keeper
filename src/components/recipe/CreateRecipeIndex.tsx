@@ -10,7 +10,7 @@ type RecipeState = {
 }
 
 interface Props {
-    token: string
+    token: string | null
 }
 
 export default class CreateRecipeIndex extends Component<Props, RecipeState>{
@@ -72,7 +72,7 @@ export default class CreateRecipeIndex extends Component<Props, RecipeState>{
             }),
             headers: new Headers({
                 'Content-Type': 'application/json',
-                'Authorization': this.props.token
+                'Authorization': `${this.props.token}`
             })
         }).then((response)=> response.json())
             .then((data)=>{

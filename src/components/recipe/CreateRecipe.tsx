@@ -17,7 +17,7 @@ const useStyles = makeStyles(() =>
 );
 
 interface Props {
-    token: string
+    token: string | null
 }
 
 const CreateRecipe = (props: Props) => {
