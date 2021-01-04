@@ -9,7 +9,7 @@ import Home from './Home';
 import Login from './auth/Login';
 import CreateRecipe from './recipe/CreateRecipe';
 import GetRecipeIndex from './recipe/GetRecipeIndex';
-import UserRecipesIndex from './recipe/UserRecipesIndex';
+import UserRecipes from './recipe/UserRecipesIndex';
 
 const useStyles = makeStyles(()=>
     createStyles({
@@ -27,7 +27,7 @@ const useStyles = makeStyles(()=>
 interface Props {
     updateToken:(newToken: string) =>void,
     clearToken:() => void,
-    token: string
+    token: string | null
 }
 
 const Main = (props: Props) => {
@@ -48,7 +48,7 @@ const Main = (props: Props) => {
                         <Route exact path='/login' render={()=>(<Login updateToken={props.updateToken} />)} />
                         <Route exact path='/createRecipe' render={()=>(<CreateRecipe token={props.token} />)} />
                         <Route exact path='/getRecipe' render={()=>(<GetRecipeIndex />)} />
-                        <Route exact path='/userRecipes' render={()=>(<UserRecipesIndex token={props.token} />)} />
+                        <Route exact path='/userRecipes' render={()=>(<UserRecipes token={props.token} />)} />
                     </Switch>
                     <div className={classes.bottomNavDiv}>
                         {bottomNavHandle()}
