@@ -1,7 +1,7 @@
 import UserRecipesIndex from './UserRecipesIndex'
 
 interface Props {
-    token: string
+    token: string | null
 }
 
 const UserRecipes = (props: Props) => {
