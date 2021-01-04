@@ -34,7 +34,12 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const UserRecipes = (props: any) => {
+interface Props {
+    deleteRecipe:(recipe: any) => void,
+    userRecipes: []
+}
+
+const UserRecipes = (props: Props) => {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 

@@ -38,10 +38,21 @@ export default class UserRecipesIndex extends Component<Props, UserRecipesState>
         this.userRecipes()
     }
 
+    deleteReceipe(recipe: any){
+        fetch(`http://localhost:3210/recipe/${recipe.id}`, {
+            method: 'DELETE',
+            headers: new Headers({
+                "Content-Type": "application/json",
+                "Authorization": this.props.token
+            })
+        })
+        .then(()=>console.log(this.userRecipes))
+    }
+
     render() {
         return (
             <div>
-                <UserRecipes userRecipes={this.state.userRecipeState} />
+                <UserRecipes userRecipes={this.state.userRecipeState} deleteRecipe={this.deleteReceipe} />
             </div>
         )
     }
