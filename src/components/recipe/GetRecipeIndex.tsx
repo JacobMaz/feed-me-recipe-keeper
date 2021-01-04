@@ -85,7 +85,7 @@ class GetRecipeIndex extends Component<Props, GetRecipeState>{
                 <Card className={classes.root}>
                     <CardHeader avatar={<Avatar aria-label='recipe'>
                         R
-                    </Avatar>} title={recipe.recipeName} subheader={recipe.user.userName} />
+                    </Avatar>} title={recipe.recipeName} subheader={recipe.cuisine} />
                     <CardMedia className={classes.media} image='' />
                     <CardContent>
                         <Typography variant='body2' color='textSecondary' component='p' >

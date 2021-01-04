@@ -4,6 +4,7 @@ import { Container, Card, CardHeader, CardMedia, CardContent, CardActions, Colla
 import { createStyles, withStyles } from '@material-ui/core/styles'
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import clsx from 'clsx'
+import EditRecipeIndex from './EditRecipeIndex'
 
 const styles = (theme: any) =>
     createStyles({
@@ -46,6 +47,8 @@ type UserRecipesState = {
     userRecipeState: any
     expanded: boolean
     open: boolean
+    editOpen: boolean
+    recipeToEdit: any
 }
 
 interface Props {
@@ -59,7 +62,9 @@ class UserRecipesIndex extends Component<Props, UserRecipesState>{
         this.state = {
             userRecipeState: [],
             expanded: false,
-            open: false
+            open: false,
+            editOpen: false,
+            recipeToEdit: []
         }
     }
 
@@ -103,6 +108,18 @@ class UserRecipesIndex extends Component<Props, UserRecipesState>{
         })
     };
 
+    updateOpen(){
+        this.setState({
+            editOpen: true
+        })
+    }
+
+    updateClose(){
+        this.setState({
+            editOpen: false
+        })
+    }
+
     handleOpen() {
         this.setState({
             open: true
@@ -117,6 +134,13 @@ class UserRecipesIndex extends Component<Props, UserRecipesState>{
 
     handleView() {
         return
+    }
+
+    setRecipeToEdit(userRecipeState: any){
+        this.setState({
+            recipeToEdit: userRecipeState
+        })
+        console.log('recipeToEdit', this.state.recipeToEdit)
     }
 
     render() {
@@ -147,13 +171,19 @@ class UserRecipesIndex extends Component<Props, UserRecipesState>{
                                                                     <Button>Cancel</Button>
                                                                 </div>
                                                             </Modal>
-                                                            <MenuItem onClick={popupState.close}>Edit Recipe</MenuItem>
+                                                            <Modal open={this.state.editOpen} onClose={()=>this.updateClose()} aria-labelledby='simple-modal-title' aria-describedby='simple-modal-description' >
+                                                                <div className={classes.paper} >
+                                                                    <h2 id='simple-modal-title'>Edit Recipe</h2>
+                                                                    <EditRecipeIndex recipeToEdit={this.state.recipeToEdit} token={this.props.token} />
+                                                                </div>
+                                                            </Modal>
+                                                            <MenuItem onClick={() => {this.updateOpen(); this.setRecipeToEdit(recipe)}}>Edit Recipe</MenuItem>
                                                             <MenuItem onClick={() => this.handleOpen()}>Delete Recipe</MenuItem>
                                                         </Menu>
                                                     </React.Fragment>
                                                 )}
                                             </PopupState>
-                                        </IconButton>} title={recipe.recipeName} subheader={recipe.user.userName} />
+                                        </IconButton>} title={recipe.recipeName} subheader={recipe.cuisine} />
                                     <CardMedia className={classes.media} image='' />
                                     <CardContent>
                                         <Typography variant='body2' color='textSecondary' component='p' >
