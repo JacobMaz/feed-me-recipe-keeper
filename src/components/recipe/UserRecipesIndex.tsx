@@ -15,12 +15,15 @@ import {
   MenuItem,
   Button,
   Modal,
+  Drawer,
+  List
 } from "@material-ui/core";
 import { createStyles, withStyles } from "@material-ui/core/styles";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import clsx from "clsx";
 import EditRecipeIndex from "./EditRecipeIndex";
-import CreateIngredient from './ingredient/CreateIngredient'
+import CreateIngredient from "./ingredient/CreateIngredient";
+import GetIngredient from "./ingredient/GetIngredient";
 
 const styles = (theme: any) =>
   createStyles({
@@ -57,6 +60,9 @@ const styles = (theme: any) =>
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
     },
+    list: {
+      width: 250,
+    },
   });
 
 type UserRecipesState = {
@@ -67,6 +73,8 @@ type UserRecipesState = {
   recipeToEdit: any;
   ingredientIsOpen: boolean;
   recipe: any;
+  visible: boolean
+  drawer: boolean
 };
 
 interface Props {
@@ -85,6 +93,8 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
       recipeToEdit: [],
       ingredientIsOpen: false,
       recipe: [],
+      visible: false,
+      drawer: false
     };
   }
 
@@ -175,6 +185,18 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
     });
   }
 
+  openDrawer(){
+    this.setState({
+      drawer: true
+    })
+  }
+
+  closeDrawer(){
+    this.setState({
+      drawer: false
+    })
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -184,7 +206,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
           {this.state.userRecipeState === []
             ? null
             : this.state.userRecipeState.map((recipe: any, index: any) => (
-                <div key={index}>
+                  <div key={index}>
                   <Card className={classes.root}>
                     <CardHeader
                       avatar={<Avatar aria-label="recipe">R</Avatar>}
@@ -249,6 +271,11 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                                       />
                                     </div>
                                   </Modal>
+                                  <Drawer anchor='right' open={this.state.drawer} onClose={()=>this.closeDrawer()} >
+                                        <List className={clsx(classes.list)}>
+                                          <GetIngredient recipe={this.state.recipe} token={this.props.token} />
+                                        </List>
+                                  </Drawer>
                                   <MenuItem
                                     onClick={() => {
                                       this.ingredientOpen();
@@ -256,6 +283,12 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                                     }}
                                   >
                                     Add Ingredient
+                                  </MenuItem>
+                                  <MenuItem onClick={() => {
+                                    this.openDrawer();
+                                    this.setRecipe(recipe);
+                                    }}>
+                                    View Ingredients
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
