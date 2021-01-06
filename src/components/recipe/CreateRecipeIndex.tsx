@@ -85,10 +85,10 @@ export default class CreateRecipeIndex extends Component<Props, RecipeState> {
     return (
       <div>
         <form onSubmit={(e) => this.createRecipe(e)}>
-          <TextField
-            id="outlined-basic"
-            label="Recipe Name"
-            variant="outlined"
+          <input
+            // id="outlined-basic"
+            // // label="Recipe Name"
+            // variant="outlined"
             onChange={(e) => this.setRecipeName(e.target.value)}
           />
           <TextField
