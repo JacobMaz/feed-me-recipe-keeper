@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { TextField, Button } from '@material-ui/core';
+import UpdateToken from '../interface/UpdateTokenProp'
 
 type LoginState = {
     userName: string,
     password: string
 }
 
-interface Props {
-    updateToken: (newToken: string) => void
-}
-
-export default class LoginIndex extends Component<Props, LoginState>{
-    constructor(props: any){
+export default class LoginIndex extends Component<UpdateToken, LoginState>{
+    constructor(props: UpdateToken){
         super(props)
         this.state ={
             userName: '',
@@ -19,19 +16,7 @@ export default class LoginIndex extends Component<Props, LoginState>{
         }
     }
 
-    setUserName(e:any){
-        this.setState({
-            userName: (e)
-        })
-    }
-
-    setPassword(e: any){
-        this.setState({
-            password: (e)
-        })
-    }
-
-    loginUser(e: any){
+    loginUser(e: React.FormEvent<HTMLFormElement> ){
         e.preventDefault();
         fetch('http://localhost:3210/user/login', {
             method: 'POST',
@@ -42,8 +27,8 @@ export default class LoginIndex extends Component<Props, LoginState>{
             headers: new Headers({
                 'Content-Type': 'application/json'
             })
-        }).then((response)=> response.json())
-            .then((data)=> {
+        }).then(response=> response.json())
+            .then(data=> {
                 this.props.updateToken(data.token)
             })
     }
@@ -52,8 +37,8 @@ export default class LoginIndex extends Component<Props, LoginState>{
         return (
             <div>
                 <form onSubmit={(e)=>this.loginUser(e)} >
-                    <TextField id="outlined-basic" label="Username" variant="outlined" onChange={(e)=>this.setUserName(e.target.value)} />
-                    <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e)=>this.setPassword(e.target.value)} />
+                    <TextField id="outlined-basic" label="Username" variant="outlined" onChange={(e)=>this.setState({userName: (e.target.value)})} />
+                    <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e)=>this.setState({password: (e.target.value)})} />
                     <Button type='submit' variant='contained'>LOG IN</Button>
                 </form>
             </div>

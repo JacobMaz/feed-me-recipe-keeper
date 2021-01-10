@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TextField, Button} from '@material-ui/core';
+import UpdateToken from '../interface/UpdateTokenProp'
 
 type SignUpState = {
     firstName: string,
@@ -9,12 +10,8 @@ type SignUpState = {
     password: string,
 }
 
-interface Props {
-    updateToken: (newToken: string) => void
-}
-
-export default class SignUpIndex extends Component<Props, SignUpState>{
-    constructor(props: any) {
+export default class SignUpIndex extends Component<UpdateToken, SignUpState>{
+    constructor(props: UpdateToken) {
         super(props)
         this.state = {
             firstName: '',
@@ -26,42 +23,7 @@ export default class SignUpIndex extends Component<Props, SignUpState>{
         // this.updateToken = this.props.updateToken.bind(this)
     }
 
-    setFirstName(e: any) {
-        this.setState({
-            firstName: (e)
-        })
-        // console.log('firstName', this.state.firstName)
-    }
-
-    setLastName(e: any) {
-        this.setState({
-            lastName: (e)
-        })
-        // console.log('lastName', this.state.lastName)
-    }
-
-    setUserName(e: any) {
-        this.setState({
-            userName: (e)
-        })
-        // console.log('userName', this.state.userName)
-    }
-
-    setEmail(e: any) {
-        this.setState({
-            email: (e)
-        })
-        // console.log('email', this.state.email)
-    }
-
-    setPassword(e: any) {
-        this.setState({
-            password: (e)
-        })
-        // console.log('password', this.state.password)
-    }
-
-    signUpUser(e: any) {
+    signUpUser(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         fetch('http://localhost:3210/user/register', {
             method: 'POST',
@@ -86,12 +48,11 @@ export default class SignUpIndex extends Component<Props, SignUpState>{
         return (
             <div>
                 <form onSubmit={(e)=>this.signUpUser(e)} >
-                    <TextField id="outlined-basic" label="First Name" variant="outlined" onChange={(e)=>this.setFirstName(e.target.value)} />
-                    <TextField id="outlined-basic" label="Last Name" variant="outlined"
-                    onChange={(e)=>this.setLastName(e.target.value)} />
-                    <TextField id="outlined-basic" label="Username" variant="outlined" onChange={(e)=>this.setUserName(e.target.value)} />
-                    <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e)=>this.setEmail(e.target.value)} />
-                    <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e)=>this.setPassword(e.target.value)} />
+                    <TextField id="outlined-basic" label="First Name" variant="outlined" onChange={(e)=>this.setState({firstName: (e.target.value)})} />
+                    <TextField id="outlined-basic" label="Last Name" variant="outlined" onChange={(e)=>this.setState({lastName: (e.target.value)})} />
+                    <TextField id="outlined-basic" label="Username" variant="outlined" onChange={(e)=>this.setState({userName: (e.target.value)})} />
+                    <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e)=>this.setState({email: (e.target.value)})} />
+                    <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e)=>this.setState({password: (e.target.value)})} />
                     <Button type='submit' variant="contained">Register</Button>
                 </form>
             </div>
