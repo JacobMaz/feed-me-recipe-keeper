@@ -2,6 +2,7 @@ import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { Container } from '@material-ui/core'
 import CreateRecipeIndex from './CreateRecipeIndex';
+import Token from '../interface/TokenProp'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -16,11 +17,7 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-interface Props {
-    token: string | null
-}
-
-const CreateRecipe = (props: Props) => {
+const CreateRecipe = (props: Token) => {
     const classes = useStyles();
 
     return (
