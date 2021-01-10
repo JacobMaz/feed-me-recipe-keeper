@@ -10,6 +10,7 @@ import Login from './auth/Login';
 import CreateRecipe from './recipe/CreateRecipe';
 import GetRecipe from './recipe/GetRecipeIndex';
 import UserRecipes from './recipe/UserRecipesIndex';
+import Props from './interface/Props'
 
 const useStyles = makeStyles(()=>
     createStyles({
@@ -23,12 +24,6 @@ const useStyles = makeStyles(()=>
         }
     })
 )
-
-interface Props {
-    updateToken:(newToken: string) =>void,
-    clearToken:() => void,
-    token: string | null
-}
 
 const Main = (props: Props) => {
     const classes = useStyles();

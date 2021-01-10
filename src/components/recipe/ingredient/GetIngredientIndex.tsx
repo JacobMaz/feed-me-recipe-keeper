@@ -39,11 +39,7 @@ class GetIngredientIndex extends Component<Props, GetIngredientState> {
       });
   }
 
-  handleCheck() {
-    this.setState({
-      checked: !this.state.checked,
-    });
-  }
+  handleCheck() {}
 
   componentDidMount() {
     // console.log("GetIngredientInedx: ", this.state.recipeId);
@@ -55,13 +51,16 @@ class GetIngredientIndex extends Component<Props, GetIngredientState> {
     return (
       <div>
         <div>
-          <li>
-            <Checkbox
-              checked={this.state.checked}
-              onChange={() => this.handleCheck()}
-              name="Check Me!"
-            />
-          </li>
+          <ul>
+            <li>
+              <Checkbox
+                checked={this.state.checked}
+                onChange={() => this.setState({ checked: !this.state.checked })}
+                name="Check Me!"
+              />
+              Ingredient
+            </li>
+          </ul>
         </div>
       </div>
     );

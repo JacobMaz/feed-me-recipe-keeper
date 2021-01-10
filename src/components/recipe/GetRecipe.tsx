@@ -1,6 +1,6 @@
 import GetRecipeIndex from './GetRecipeIndex';
 
-const GetRecipe = (props: any) => {
+const GetRecipe = () => {
     
     return (
         <GetRecipeIndex />
