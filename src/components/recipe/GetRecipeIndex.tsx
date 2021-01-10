@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { createStyles, withStyles } from "@material-ui/core/styles";
+import { createStyles, WithStyles, Theme, withStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
 import {
   Container,
@@ -14,8 +14,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
+import GetRecipeState from '../interface/GetRecipeState'
+import AllRecipe from '../interface/AllRecipeInterface'
 
-const styles = (theme: any) =>
+const styles = (theme: Theme) =>
   createStyles({
     container: {
       marginTop: "5em",
@@ -44,20 +46,14 @@ const styles = (theme: any) =>
     },
   });
 
-type GetRecipeState = {
-  recipeResponse: any;
-  expanded: boolean;
-};
-
-interface Props {
-  classes: any;
-}
+interface Props extends WithStyles<typeof styles>{}
 
 class GetRecipeIndex extends Component<Props, GetRecipeState> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
     this.state = {
-      recipeResponse: [],
+      allRecipe: [],
+      message: '',
       expanded: false,
     };
   }
@@ -66,10 +62,10 @@ class GetRecipeIndex extends Component<Props, GetRecipeState> {
     fetch("http://localhost:3210/recipe/allrecipes", {
       method: "GET",
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         this.setState({
-          recipeResponse: data.allRecipe,
+          allRecipe: data.allRecipe,
         });
         console.log("response", data.allRecipe);
       });
@@ -79,19 +75,13 @@ class GetRecipeIndex extends Component<Props, GetRecipeState> {
     this.allRecipes();
   }
 
-  handleExpandClick() {
-    this.setState({
-      expanded: !this.state.expanded,
-    });
-  }
-
   render() {
     const { classes } = this.props;
     return (
       <Container className={classes.container}>
         <h1>All Recipes</h1>
-        {this.state.recipeResponse.length > 0 &&
-          this.state.recipeResponse.map((recipe: any, index: any) => (
+        {this.state.allRecipe.length > 0 &&
+          this.state.allRecipe.map((recipe: AllRecipe, index: number) => (
             <div key={index}>
               <Card className={classes.root}>
                 <CardHeader
@@ -121,7 +111,7 @@ class GetRecipeIndex extends Component<Props, GetRecipeState> {
                     className={clsx(classes.expand, {
                       [classes.expandOpen]: this.state.expanded,
                     })}
-                    onClick={() => this.handleExpandClick()}
+                    onClick={() => this.setState({expanded: !this.state.expanded})}
                     aria-expanded={this.state.expanded}
                     aria-label="show more"
                   >

@@ -1,12 +1,9 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
 import {Button} from '@material-ui/core';
+import ClearToken from '../interface/ClearToken'
 
-interface Props {
-    clearToken:() => void
-}
-
-const Auth = (props: Props) => {
+const Auth = (props: ClearToken) => {
     return (
         <div>
             <div>

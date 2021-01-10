@@ -1,10 +1,7 @@
 import UserRecipesIndex from './UserRecipesIndex'
+import Token from '../interface/TokenProp'
 
-interface Props {
-    token: string | null
-}
-
-const UserRecipes = (props: Props) => {
+const UserRecipes = (props: Token) => {
 
     return (
             <div>

@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 import { TextField, Button } from "@material-ui/core";
+import Token from '../interface/TokenProp'
 
 type RecipeState = {
   recipeName: string;
   cuisine: string;
-  prepTime: number | null;
-  cookTime: number;
+  prepTime: number | null | string;
+  cookTime: number | string;
   directions: string;
 };
 
-interface Props {
-  token: string | null;
-}
-
-export default class CreateRecipeIndex extends Component<Props, RecipeState> {
-  constructor(props: any) {
+export default class CreateRecipeIndex extends Component<Token, RecipeState> {
+  constructor(props: Token) {
     super(props);
     this.state = {
       recipeName: "",
@@ -25,41 +22,11 @@ export default class CreateRecipeIndex extends Component<Props, RecipeState> {
     };
   }
 
-  setRecipeName(e: any) {
-    this.setState({
-      recipeName: e,
-    });
-  }
-
-  setCuisine(e: any) {
-    this.setState({
-      cuisine: e,
-    });
-  }
-
-  setPrepTime(e: any) {
-    this.setState({
-      prepTime: e,
-    });
-  }
-
-  setCookTime(e: any) {
-    this.setState({
-      cookTime: e,
-    });
-  }
-
-  setDirections(e: any) {
-    this.setState({
-      directions: e,
-    });
-  }
-
   componentDidMount() {
     console.log("createRecipe didMount: ", this.props.token);
   }
 
-  createRecipe(e: any) {
+  createRecipe(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     fetch("http://localhost:3210/recipe/create", {
       method: "POST",
@@ -85,35 +52,37 @@ export default class CreateRecipeIndex extends Component<Props, RecipeState> {
     return (
       <div>
         <form onSubmit={(e) => this.createRecipe(e)}>
-          <input
-            // id="outlined-basic"
-            // // label="Recipe Name"
-            // variant="outlined"
-            onChange={(e) => this.setRecipeName(e.target.value)}
+          <TextField
+            id="outlined-basic"
+            label="Recipe Name"
+            variant="outlined"
+            onChange={(e) => this.setState({recipeName: e.target.value})}
           />
           <TextField
             id="outlined-basic"
             label="Cuisine"
             variant="outlined"
-            onChange={(e) => this.setCuisine(e.target.value)}
+            onChange={(e) => this.setState({cuisine: e.target.value})}
           />
           <TextField
             id="outlined-basic"
-            label="Prep Time"
+            label="Prep Time(in mins)"
             variant="outlined"
-            onChange={(e) => this.setPrepTime(e.target.value)}
+            type='number'
+            onChange={(e) => this.setState({prepTime: e.target.value})}
           />
           <TextField
             id="outlined-basic"
-            label="Cook Time"
+            label="Cook Time(in mins)"
             variant="outlined"
-            onChange={(e) => this.setCookTime(e.target.value)}
+            type='number'
+            onChange={(e) => this.setState({cookTime: e.target.value})}
           />
           <TextField
             id="outlined-basic"
             label="Directions"
             variant="outlined"
-            onChange={(e) => this.setDirections(e.target.value)}
+            onChange={(e) => this.setState({directions: e.target.value})}
           />
           <Button type="submit" variant="contained">
             Add Recipe
