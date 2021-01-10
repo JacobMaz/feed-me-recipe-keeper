@@ -4,6 +4,7 @@ import { AppBar, Toolbar } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Auth from './auth/Auth';
 import { Link } from 'react-router-dom';
+import ClearToken from './interface/ClearToken'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -14,11 +15,7 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-interface Props {
-    clearToken:() => void
-}
-
-const NavbBar = (props: Props) => {
+const NavbBar = (props: ClearToken) => {
     const classes = useStyles();
 
     return (

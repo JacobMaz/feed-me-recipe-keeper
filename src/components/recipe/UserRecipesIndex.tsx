@@ -18,14 +18,16 @@ import {
   Drawer,
   List
 } from "@material-ui/core";
-import { createStyles, withStyles } from "@material-ui/core/styles";
+import { createStyles, withStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import clsx from "clsx";
 import EditRecipeIndex from "./EditRecipeIndex";
 import CreateIngredient from "./ingredient/CreateIngredient";
 import GetIngredient from "./ingredient/GetIngredient";
+import UserRecipesState from '../interface/UserRecipeState'
+import UserRecipe from '../interface/UserRecipe'
 
-const styles = (theme: any) =>
+const styles = (theme: Theme) =>
   createStyles({
     container: {
       marginTop: "5em",
@@ -65,36 +67,120 @@ const styles = (theme: any) =>
     },
   });
 
-type UserRecipesState = {
-  userRecipeState: any;
-  expanded: boolean;
-  open: boolean;
-  editOpen: boolean;
-  recipeToEdit: any;
-  ingredientIsOpen: boolean;
-  recipe: any;
-  visible: boolean
-  drawer: boolean
-};
-
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   token: string | null;
-  classes: any;
 }
 
 class UserRecipesIndex extends Component<Props, UserRecipesState> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
     this.state = {
-      userRecipeState: [],
+      userRecipes: [{
+        id: 0,
+        recipeName: '',
+        cuisine: '',
+        prepTime: null,
+        cookTime: 0,
+        directions: '',
+        createdAt: '',
+        updatedAt: '',
+        userId: 0,
+        user: [{
+          id: 0,
+          firstName: '',
+          lastName: '',
+          userName: '',
+          email: '',
+          password: '',
+          role: '',
+          createdAt: '',
+          updatedAt: '',
+        }],
+        ingredients: [{
+          id: 0,
+          name: '',
+          quantity: 0,
+          measurement: '',
+          ingredientType: '',
+          createdAt: '',
+          updatedAt: '',
+          recipeId: 0,
+          userId: 0
+        }]
+      }],
       expanded: false,
       open: false,
       editOpen: false,
-      recipeToEdit: [],
+      recipeToEdit: [{
+        id: 0,
+        recipeName: '',
+        cuisine: '',
+        prepTime: null,
+        cookTime: 0,
+        directions: '',
+        createdAt: '',
+        updatedAt: '',
+        userId: 0,
+        user: [{
+          id: 0,
+          firstName: '',
+          lastName: '',
+          userName: '',
+          email: '',
+          password: '',
+          role: '',
+          createdAt: '',
+          updatedAt: '',
+        }],
+        ingredients: [{
+          id: 0,
+          name: '',
+          quantity: 0,
+          measurement: '',
+          ingredientType: '',
+          createdAt: '',
+          updatedAt: '',
+          recipeId: 0,
+          userId: 0
+        }]
+      }],
       ingredientIsOpen: false,
-      recipe: [],
+      recipe: [{
+        id: 0,
+        recipeName: '',
+        cuisine: '',
+        prepTime: null,
+        cookTime: 0,
+        directions: '',
+        createdAt: '',
+        updatedAt: '',
+        userId: 0,
+        user: [{
+          id: 0,
+          firstName: '',
+          lastName: '',
+          userName: '',
+          email: '',
+          password: '',
+          role: '',
+          createdAt: '',
+          updatedAt: '',
+        }],
+        ingredients: [{
+          id: 0,
+          name: '',
+          quantity: 0,
+          measurement: '',
+          ingredientType: '',
+          createdAt: '',
+          updatedAt: '',
+          recipeId: 0,
+          userId: 0
+        }]
+      }],
       visible: false,
-      drawer: false
+      drawer: false,
+      message: ''
     };
   }
 
@@ -106,10 +192,10 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
         Authorization: `${this.props.token}`,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         this.setState({
-          userRecipeState: data.userRecipes,
+          userRecipes: data.userRecipes,
         });
         console.log("response", data.userRecipes);
       });
@@ -120,7 +206,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
     console.log("TOKEN: ", this.props.token);
   }
 
-  deleteRecipe(recipe: any) {
+  deleteRecipe(recipe: UserRecipe) {
     // console.log('deleteRecipe', this.props.token)
     fetch(`http://localhost:3210/recipe/${recipe.id}`, {
       method: "DELETE",
@@ -128,73 +214,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
         "Content-Type": "application/json",
         Authorization: `${this.props.token}`,
       }),
-    }).then(() => console.log(this.state.userRecipeState));
-  }
-
-  handleExpandClick() {
-    this.setState({
-      expanded: !this.state.expanded,
-    });
-  }
-
-  updateOpen() {
-    this.setState({
-      editOpen: true,
-    });
-  }
-
-  updateClose() {
-    this.setState({
-      editOpen: false,
-    });
-  }
-
-  handleOpen() {
-    this.setState({
-      open: true,
-    });
-  }
-
-  handleClose() {
-    this.setState({
-      open: false,
-    });
-  }
-
-  setRecipeToEdit(userRecipeState: any) {
-    this.setState({
-      recipeToEdit: userRecipeState,
-    });
-  }
-
-  setRecipe(userRecipeState: any) {
-    this.setState({
-      recipe: userRecipeState,
-    });
-  }
-
-  ingredientOpen() {
-    this.setState({
-      ingredientIsOpen: true,
-    });
-  }
-
-  ingredientClose() {
-    this.setState({
-      ingredientIsOpen: false,
-    });
-  }
-
-  openDrawer(){
-    this.setState({
-      drawer: true
-    })
-  }
-
-  closeDrawer(){
-    this.setState({
-      drawer: false
-    })
+    }).then(() => console.log(this.state.userRecipes));
   }
 
   render() {
@@ -203,9 +223,9 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
       <Container className={classes.container}>
         <div>
           <h1>My Recipes</h1>
-          {this.state.userRecipeState === []
+          {this.state.userRecipes === []
             ? null
-            : this.state.userRecipeState.map((recipe: any, index: any) => (
+            : this.state.userRecipes.map((recipe: any, index: number) => (
                   <div key={index}>
                   <Card className={classes.root}>
                     <CardHeader
@@ -222,7 +242,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                                 <Menu {...bindMenu(popupState)}>
                                   <Modal
                                     open={this.state.open}
-                                    onClose={() => this.handleClose()}
+                                    onClose={() => this.setState({open: false})}
                                     aria-labelledby="simple-modal-title"
                                     aria-describedby="simple-modal-description"
                                   >
@@ -241,7 +261,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                                   </Modal>
                                   <Modal
                                     open={this.state.editOpen}
-                                    onClose={() => this.updateClose()}
+                                    onClose={() => this.setState({editOpen: false})}
                                     aria-labelledby="simple-modal-title"
                                     aria-describedby="simple-modal-description"
                                   >
@@ -257,7 +277,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                                   </Modal>
                                   <Modal
                                     open={this.state.ingredientIsOpen}
-                                    onClose={() => this.ingredientClose()}
+                                    onClose={() => this.setState({ingredientIsOpen: false})}
                                     aria-labelledby="simple-modal-title"
                                     aria-describedby="simple-modal-description"
                                   >
@@ -271,34 +291,34 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                                       />
                                     </div>
                                   </Modal>
-                                  <Drawer anchor='right' open={this.state.drawer} onClose={()=>this.closeDrawer()} >
+                                  <Drawer anchor='right' open={this.state.drawer} onClose={()=>this.setState({drawer: false})} >
                                         <List className={clsx(classes.list)}>
                                           <GetIngredient recipe={this.state.recipe} token={this.props.token} />
                                         </List>
                                   </Drawer>
                                   <MenuItem
                                     onClick={() => {
-                                      this.ingredientOpen();
-                                      this.setRecipe(recipe);
+                                      this.setState({ingredientIsOpen: true});
+                                      this.setState({recipe: recipe});
                                     }}
                                   >
                                     Add Ingredient
                                   </MenuItem>
                                   <MenuItem onClick={() => {
-                                    this.openDrawer();
-                                    this.setRecipe(recipe);
+                                    this.setState({drawer: true});
+                                    this.setState({recipe: recipe});
                                     }}>
                                     View Ingredients
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
-                                      this.updateOpen();
-                                      this.setRecipeToEdit(recipe);
+                                      this.setState({editOpen: true});
+                                      this.setState({recipeToEdit: recipe});
                                     }}
                                   >
                                     Edit Recipe
                                   </MenuItem>
-                                  <MenuItem onClick={() => this.handleOpen()}>
+                                  <MenuItem onClick={() => this.setState({open: true})}>
                                     Delete Recipe
                                   </MenuItem>
                                 </Menu>
@@ -332,7 +352,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                         className={clsx(classes.expand, {
                           [classes.expandOpen]: this.state.expanded,
                         })}
-                        onClick={() => this.handleExpandClick()}
+                        onClick={() => this.setState({expanded: !this.state.expanded})}
                         aria-expanded={this.state.expanded}
                         aria-label="show more"
                       >

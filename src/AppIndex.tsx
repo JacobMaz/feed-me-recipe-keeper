@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import Main from './components/Main';
+import Props from './components/interface/Props'
+import Token from './components/interface/TokenProp'
 
-type AppState = {
-    token: string | null
-    recipeRes: any
-}
-
-export default class AppIndex extends Component<{}, AppState>{
-    constructor(props: any){
+export default class AppIndex extends Component<{}, Token>{
+    constructor(props: Props){
         super(props)
         this.state = {
             token: localStorage.getItem('token') ? localStorage.getItem('token') : '' ,
-            recipeRes: []
         }
     }
 
