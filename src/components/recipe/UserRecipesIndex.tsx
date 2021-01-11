@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ExpandMore, MoreVert } from "@material-ui/icons";
+import { ExpandMore, MoreVert, Edit, DeleteOutline } from "@material-ui/icons";
 import {
   Container,
   Card,
@@ -16,7 +16,8 @@ import {
   Button,
   Modal,
   Drawer,
-  List
+  List,
+  TextField
 } from "@material-ui/core";
 import { createStyles, withStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
@@ -180,6 +181,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
       }],
       visible: false,
       drawer: false,
+      editIngredient: '',
       message: ''
     };
   }
@@ -204,6 +206,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
   componentDidMount() {
     this.userRecipes();
     console.log("TOKEN: ", this.props.token);
+    console.log('editIngreidient: ', this.state.editIngredient)
   }
 
   deleteRecipe(recipe: UserRecipe) {
@@ -368,6 +371,26 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                         <Typography paragraph>Directions:</Typography>
                         <Typography paragraph>{recipe.directions}</Typography>
                       </CardContent>
+                      {recipe.ingredients.length > 0 ? recipe.ingredients.map(
+                        (ingredient: any, index: number) => (
+                          <div key={index}>
+                              <CardContent>
+                        <Typography paragraph>Ingredients:</Typography>
+                        {this.state.editIngredient === '' ?
+                        <Typography paragraph>{ingredient.name} {ingredient.quantity} {ingredient.measurement} <button onClick={()=> {this.setState({editIngredient: ingredient}); console.log('editIngedient', this.state.editIngredient)}} ><Edit /></button>
+                        <button><DeleteOutline /></button></Typography>
+                        : <div>
+                          <input placeholder={ingredient.name} />
+                          <input placeholder={ingredient.quantity} />
+                          <input placeholder={ingredient.measurement} />
+                          <button onClick={()=>{this.setState({editIngredient: ''})}}>Cancel</button>
+                        </div>
+                          }
+                      </CardContent>
+                          </div>
+                        )
+                      )
+                      : null}
                     </Collapse>
                   </Card>
                 </div>
