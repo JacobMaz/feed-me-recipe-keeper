@@ -16,8 +16,7 @@ import {
   Button,
   Modal,
   Drawer,
-  List,
-  TextField
+  List
 } from "@material-ui/core";
 import { createStyles, withStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
@@ -27,6 +26,7 @@ import CreateIngredient from "./ingredient/CreateIngredient";
 import GetIngredient from "./ingredient/GetIngredient";
 import UserRecipesState from '../interface/UserRecipeState'
 import UserRecipe from '../interface/UserRecipe'
+import EditIngredient from "./ingredient/EditIngredient";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -220,6 +220,17 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
     }).then(() => console.log(this.state.userRecipes));
   }
 
+  deleteIngredient(ingredient: any) {
+    // console.log('deleteRecipe', this.props.token)
+    fetch(`http://localhost:3210/ingredient/${ingredient.id}`, {
+      method: "DELETE",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `${this.props.token}`,
+      }),
+    }).then(() => console.log(this.state.userRecipes));
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -378,13 +389,8 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                         <Typography paragraph>Ingredients:</Typography>
                         {this.state.editIngredient === '' ?
                         <Typography paragraph>{ingredient.name} {ingredient.quantity} {ingredient.measurement} <button onClick={()=> {this.setState({editIngredient: ingredient}); console.log('editIngedient', this.state.editIngredient)}} ><Edit /></button>
-                        <button><DeleteOutline /></button></Typography>
-                        : <div>
-                          <input placeholder={ingredient.name} />
-                          <input placeholder={ingredient.quantity} />
-                          <input placeholder={ingredient.measurement} />
-                          <button onClick={()=>{this.setState({editIngredient: ''})}}>Cancel</button>
-                        </div>
+                        <button><DeleteOutline onClick={()=>this.deleteIngredient(ingredient)}/></button></Typography>
+                        : <div><EditIngredient ingredient={ingredient} token={this.props.token} /><button onClick={()=>{this.setState({editIngredient: ''})}}>Cancel</button></div>
                           }
                       </CardContent>
                           </div>
