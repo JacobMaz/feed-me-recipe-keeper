@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Checkbox } from "@material-ui/core";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 
 type GetIngredientState = {
   recipeId: number;
   ingredients: any;
   checked: boolean;
+  ingredientToEdit: any
 };
 
 interface Props {
@@ -19,6 +20,7 @@ class GetIngredientIndex extends Component<Props, GetIngredientState> {
       recipeId: this.props.recipe.id,
       ingredients: [],
       checked: false,
+      ingredientToEdit: []
     };
   }
 
@@ -51,16 +53,17 @@ class GetIngredientIndex extends Component<Props, GetIngredientState> {
     return (
       <div>
         <div>
-          <ul>
-            <li>
-              <Checkbox
-                checked={this.state.checked}
-                onChange={() => this.setState({ checked: !this.state.checked })}
-                name="Check Me!"
-              />
-              Ingredient
-            </li>
-          </ul>
+              {this.state.ingredients === [] ? <div><h3>No Ingredients</h3></div> : this.state.ingredients.map((ingredient: any, index: number) => (
+                  <div>
+                    <FormControlLabel key={index}
+                      value="end"
+                      control={<Checkbox color="primary" checked={this.state.checked}
+                      onChange={() => this.setState({ checked: !this.state.checked })} />}
+                      label={ingredient.name}
+                      labelPlacement="end"
+                    />
+                  </div>
+              ))}
         </div>
       </div>
     );

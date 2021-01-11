@@ -28,8 +28,11 @@ const GetIngredient =(props: Props)=>{
 
     return(
         <Container className={classes.container}>
-            <div>Get Ingredient</div>
-            <GetIngredientIndex recipe={props.recipe} token={props.token} />
+            <div>
+                <h2>Ingredient Checklist</h2>
+                <GetIngredientIndex recipe={props.recipe} token={props.token} />
+            </div>
+            
         </Container>
     )
 }
