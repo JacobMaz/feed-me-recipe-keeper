@@ -8,6 +8,7 @@
     recipe: UserRecipe[];
     visible: boolean
     drawer: boolean
+    editIngredient: any
     message: string;
   }
   
