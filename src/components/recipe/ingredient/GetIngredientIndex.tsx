@@ -1,26 +1,62 @@
 import React, { Component } from "react";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 
-type GetIngredientState = {
+interface GetIngredientState {
   recipeId: number;
-  ingredients: any;
+  ingredients: Ingredient[];
   checked: boolean;
-  ingredientToEdit: any
 };
+
+interface UserRecipe {
+  id: number;
+  recipeName: string;
+  cuisine: string;
+  prepTime: number | null;
+  cookTime: number;
+  directions: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+  user: User[];
+  ingredients: Ingredient[];
+}
+
+interface Ingredient {
+  id: number;
+  name: string;
+  quantity: number;
+  measurement: string;
+  ingredientType: string;
+  createdAt: string;
+  updatedAt: string;
+  recipeId: number;
+  userId: number;
+}
+
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 interface Props {
   token: string | null;
-  recipe: any;
+  activeRecipe: UserRecipe;
 }
 
 class GetIngredientIndex extends Component<Props, GetIngredientState> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
     this.state = {
-      recipeId: this.props.recipe.id,
+      recipeId: this.props.activeRecipe.id,
       ingredients: [],
       checked: false,
-      ingredientToEdit: []
     };
   }
 
@@ -53,7 +89,7 @@ class GetIngredientIndex extends Component<Props, GetIngredientState> {
     return (
       <div>
         <div>
-              {this.state.ingredients === [] ? <div><h3>No Ingredients</h3></div> : this.state.ingredients.map((ingredient: any, index: number) => (
+              {this.state.ingredients === [] ? <div><h3>No Ingredients</h3></div> : this.state.ingredients.map((ingredient: Ingredient, index: number) => (
                   <div>
                     <FormControlLabel key={index}
                       value="end"
