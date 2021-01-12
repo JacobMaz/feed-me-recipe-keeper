@@ -8,6 +8,7 @@ import {
   FormControl,
   Select,
 } from "@material-ui/core";
+import APIURL from "../../../helpers/environment";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -107,7 +108,7 @@ class CreateIngredientIndex extends Component<Props, IngredientState> {
   
   createIngredient(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    fetch("http://localhost:3210/ingredient/create", {
+    fetch(`${APIURL}/ingredient/create`, {
       method: "POST",
       body: JSON.stringify({
         name: this.state.name,

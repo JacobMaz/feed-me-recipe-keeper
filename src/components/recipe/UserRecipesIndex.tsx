@@ -27,6 +27,7 @@ import GetIngredient from "./ingredient/GetIngredient";
 // import UserRecipesState from '../interface/UserRecipeState'
 // import UserRecipe from '../interface/UserRecipe'
 import EditIngredient from "./ingredient/EditIngredient";
+import APIURL from '../../helpers/environment'
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -169,7 +170,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
   }
 
   userRecipes() {
-    fetch("http://localhost:3210/recipe/userrecipes", {
+    fetch(`${APIURL}/recipe/userrecipes`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -193,7 +194,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
 
   deleteRecipe(recipe: UserRecipe) {
     // console.log('deleteRecipe', this.props.token)
-    fetch(`http://localhost:3210/recipe/${recipe.id}`, {
+    fetch(`${APIURL}/recipe/${recipe.id}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -204,7 +205,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
 
   deleteIngredient(ingredient: Ingredient) {
     // console.log('deleteRecipe', this.props.token)
-    fetch(`http://localhost:3210/ingredient/${ingredient.id}`, {
+    fetch(`${APIURL}/ingredient/${ingredient.id}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",

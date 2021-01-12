@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import APIURL from '../../../helpers/environment';
 
 type EditIngredientState = {
     name: string
@@ -37,7 +38,7 @@ class EditIngredient extends Component<Props, EditIngredientState>{
 
     editRecipe(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        fetch(`http://localhost:3210/ingredient/${this.props.ingredient.id}`, {
+        fetch(`${APIURL}/ingredient/${this.props.ingredient.id}`, {
             method: 'PUT',
             body: JSON.stringify({
                 name: this.state.name
@@ -54,7 +55,7 @@ class EditIngredient extends Component<Props, EditIngredientState>{
 
     setQuantity(e: any) {
         this.setState({
-          quantity: (e),
+          quantity: e,
         });
       }
     

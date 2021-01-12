@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextField, Button} from '@material-ui/core';
 import UpdateToken from '../interface/UpdateTokenProp'
+import APIURL from '../../helpers/environment';
 
 type SignUpState = {
     firstName: string,
@@ -25,7 +26,7 @@ export default class SignUpIndex extends Component<UpdateToken, SignUpState>{
 
     signUpUser(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        fetch('http://localhost:3210/user/register', {
+        fetch(`${APIURL}/user/register`, {
             method: 'POST',
             body: JSON.stringify({
                 firstName: this.state.firstName,

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
+import APIURL from "../../../helpers/environment";
 
 interface GetIngredientState {
   recipeId: number;
@@ -61,7 +62,7 @@ class GetIngredientIndex extends Component<Props, GetIngredientState> {
   }
 
   ingredients() {
-    fetch(`http://localhost:3210/ingredient/${this.state.recipeId}`, {
+    fetch(`${APIURL}/ingredient/${this.state.recipeId}`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",

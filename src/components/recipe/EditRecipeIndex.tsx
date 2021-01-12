@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { TextField, Button } from "@material-ui/core";
+import APIURL from "../../helpers/environment";
 
 type EditRecipeState = {
   recipeName: string;
@@ -66,7 +67,7 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
 
   editRecipe(e: React.FormEvent<HTMLFormElement>){
       e.preventDefault();
-      fetch(`http://localhost:3210/recipe/${this.props.activeRecipe.id}`, {
+      fetch(`${APIURL}/recipe/${this.props.activeRecipe.id}`, {
           method: 'PUT',
           body: JSON.stringify({
               recipeName: this.state.recipeName,
@@ -93,7 +94,9 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
   }
 
   setCookTime(e: any) {
-    ;
+    this.setState({
+      cookTime: e,
+    });
   }
 
   componentDidMount() {

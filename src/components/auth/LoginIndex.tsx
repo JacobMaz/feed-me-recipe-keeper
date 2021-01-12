@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import UpdateToken from '../interface/UpdateTokenProp'
+import APIURL from '../../helpers/environment';
 
 type LoginState = {
     userName: string,
@@ -18,7 +19,7 @@ export default class LoginIndex extends Component<UpdateToken, LoginState>{
 
     loginUser(e: React.FormEvent<HTMLFormElement> ){
         e.preventDefault();
-        fetch('http://localhost:3210/user/login', {
+        fetch(`${APIURL}/user/login`, {
             method: 'POST',
             body: JSON.stringify({
                 userName: this.state.userName,
