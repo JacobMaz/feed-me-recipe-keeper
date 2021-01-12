@@ -8,15 +8,11 @@ class BottomNav extends Component {
         value: 0
     }
 
-    handleChange = (e: any, value: any) => {
-        this.setState({ value });
-    }
-
     render() {
         const { value } = this.state;
 
         return (
-            <BottomNavigation value={value} onChange={this.handleChange}>
+            <BottomNavigation value={value} onChange={()=>this.setState({ value })}>
                 <Link to='/createRecipe'>
                     <BottomNavigationAction label='Add Recipe' showLabel icon={<AddCircleOutline />} />
                 </Link>

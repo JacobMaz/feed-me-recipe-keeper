@@ -2,22 +2,40 @@ import React, { Component } from 'react'
 
 type EditIngredientState = {
     name: string
+    quantity: number
+    measurement: string;
+    ingredientType: string
 }
 
 interface Props {
-    ingredient: any
+    ingredient: Ingredient
     token: string | null
 }
 
+interface Ingredient {
+    id: number;
+    name: string;
+    quantity: number;
+    measurement: string;
+    ingredientType: string;
+    createdAt: string;
+    updatedAt: string;
+    recipeId: number;
+    userId: number;
+  }
+
 class EditIngredient extends Component<Props, EditIngredientState>{
-    constructor(props: any){
+    constructor(props: Props){
         super(props);
         this.state = {
-            name: this.props.ingredient.name
+            name: this.props.ingredient.name,
+            quantity: this.props.ingredient.quantity,
+            measurement: this.props.ingredient.measurement,
+            ingredientType: this.props.ingredient.measurement
         }
     }
 
-    editRecipe(e: any){
+    editRecipe(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
         fetch(`http://localhost:3210/ingredient/${this.props.ingredient.id}`, {
             method: 'PUT',
@@ -33,14 +51,27 @@ class EditIngredient extends Component<Props, EditIngredientState>{
               console.log(updatedIngredient)
           })
     }
+
+    setQuantity(e: any) {
+        this.setState({
+          quantity: (e),
+        });
+      }
     
     render(){
         return(
             <div>
                 <form onSubmit={(e)=>this.editRecipe(e)}>
                     <input placeholder={this.props.ingredient.name} onChange={(e)=>this.setState({name: e.target.value})} />
-                    <input placeholder={this.props.ingredient.quantity} />
-                    <input placeholder={this.props.ingredient.measurement} />
+                    <input type='number' onChange={(e)=>this.setQuantity(e)} />
+                    <input placeholder={this.props.ingredient.measurement} onChange={(e)=>this.setState({measurement: e.target.value})} />
+                    <select placeholder={this.props.ingredient.ingredientType} >
+                        <option value='Main'>Main</option>
+                        <option value='Produce'>Produce</option>
+                        <option value='Sauces'>Sauces</option>
+                        <option value='Sugar and Spices'>Sugar and Spices</option>
+                        <option value='Baking'>Baking</option>
+                    </select>
                     <button type='submit'>edit</button>
                 </form>
             </div>

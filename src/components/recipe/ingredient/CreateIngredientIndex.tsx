@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { createStyles, withStyles } from "@material-ui/core/styles";
+import { createStyles, withStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import {
   TextField,
   Button,
@@ -9,7 +9,7 @@ import {
   Select,
 } from "@material-ui/core";
 
-const styles = (theme: any) =>
+const styles = (theme: Theme) =>
   createStyles({
     formControl: {
       margin: theme.spacing(1),
@@ -20,7 +20,7 @@ const styles = (theme: any) =>
     },
   });
 
-type IngredientState = {
+interface IngredientState {
   name: string;
   quantity: number;
   measurement: string;
@@ -28,28 +28,59 @@ type IngredientState = {
   recipeId: number
 };
 
-interface Props {
+interface UserRecipe {
+  id: number;
+  recipeName: string;
+  cuisine: string;
+  prepTime: number | null;
+  cookTime: number;
+  directions: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+  user: User[];
+  ingredients: Ingredient[];
+}
+
+interface Ingredient {
+  id: number;
+  name: string;
+  quantity: number;
+  measurement: string;
+  ingredientType: string;
+  createdAt: string;
+  updatedAt: string;
+  recipeId: number;
+  userId: number;
+}
+
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Props extends WithStyles<typeof styles> {
   token: string | null;
-  classes: any;
-  recipe: any
+  activeRecipe: UserRecipe
 }
 
 class CreateIngredientIndex extends Component<Props, IngredientState> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       name: '',
       quantity: 0,
       measurement: '',
       ingredientType: '',
-      recipeId: this.props.recipe.id
+      recipeId: this.props.activeRecipe.id
     };
-  }
-
-  setName(e: any) {
-    this.setState({
-      name: (e),
-    });
   }
 
   setQuantity(e: any) {
@@ -74,7 +105,7 @@ class CreateIngredientIndex extends Component<Props, IngredientState> {
       console.log('Recipe ID!! ', this.state.recipeId)
   }
   
-  createIngredient(e: any) {
+  createIngredient(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     fetch("http://localhost:3210/ingredient/create", {
       method: "POST",
@@ -105,7 +136,7 @@ class CreateIngredientIndex extends Component<Props, IngredientState> {
             id="outlined-basic"
             label="Ingredient Name"
             variant="outlined"
-            onChange={(e) => this.setName(e.target.value)}
+            onChange={(e) => this.setState({name: e.target.value})}
           />
           <TextField
             id="outlined-basic"
