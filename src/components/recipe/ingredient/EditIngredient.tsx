@@ -32,7 +32,7 @@ class EditIngredient extends Component<Props, EditIngredientState>{
             name: this.props.ingredient.name,
             quantity: this.props.ingredient.quantity,
             measurement: this.props.ingredient.measurement,
-            ingredientType: this.props.ingredient.measurement
+            ingredientType: this.props.ingredient.ingredientType
         }
     }
 
@@ -41,7 +41,10 @@ class EditIngredient extends Component<Props, EditIngredientState>{
         fetch(`${APIURL}/ingredient/${this.props.ingredient.id}`, {
             method: 'PUT',
             body: JSON.stringify({
-                name: this.state.name
+                name: this.state.name,
+                quantity: this.state.quantity,
+                measurement: this.state.measurement,
+                ingredientType: this.state.ingredientType
             }),
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -64,7 +67,7 @@ class EditIngredient extends Component<Props, EditIngredientState>{
             <div>
                 <form onSubmit={(e)=>this.editRecipe(e)}>
                     <input placeholder={this.props.ingredient.name} onChange={(e)=>this.setState({name: e.target.value})} />
-                    <input type='number' onChange={(e)=>this.setQuantity(e)} />
+                    <input type='number' value={this.state.quantity} onChange={(e)=>this.setQuantity(e.target.value)} />
                     <input placeholder={this.props.ingredient.measurement} onChange={(e)=>this.setState({measurement: e.target.value})} />
                     <select placeholder={this.props.ingredient.ingredientType} >
                         <option value='Main'>Main</option>
