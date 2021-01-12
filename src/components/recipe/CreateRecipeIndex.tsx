@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { TextField, Button } from "@material-ui/core";
 import Token from '../interface/TokenProp'
+import APIURL from "../../helpers/environment";
 
 type RecipeState = {
   recipeName: string;
@@ -28,7 +29,7 @@ export default class CreateRecipeIndex extends Component<Token, RecipeState> {
 
   createRecipe(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    fetch("http://localhost:3210/recipe/create", {
+    fetch(`${APIURL}/recipe/create`, {
       method: "POST",
       body: JSON.stringify({
         recipeName: this.state.recipeName,

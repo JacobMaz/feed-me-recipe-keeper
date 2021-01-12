@@ -16,6 +16,7 @@ import {
 import { ExpandMore } from "@material-ui/icons";
 import GetRecipeState from '../interface/GetRecipeState'
 import AllRecipe from '../interface/AllRecipeInterface'
+import APIURL from "../../helpers/environment";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -59,7 +60,7 @@ class GetRecipeIndex extends Component<Props, GetRecipeState> {
   }
 
   allRecipes() {
-    fetch("http://localhost:3210/recipe/allrecipes", {
+    fetch(`${APIURL}/recipe/allrecipes`, {
       method: "GET",
     })
       .then(res => res.json())
