@@ -55,7 +55,7 @@ class EditIngredient extends Component<Props, EditIngredientState>{
 
     setQuantity(e: any) {
         this.setState({
-          quantity: (e),
+          quantity: e,
         });
       }
     

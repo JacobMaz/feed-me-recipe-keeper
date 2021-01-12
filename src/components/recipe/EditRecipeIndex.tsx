@@ -94,7 +94,9 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
   }
 
   setCookTime(e: any) {
-    ;
+    this.setState({
+      cookTime: e,
+    });
   }
 
   componentDidMount() {
