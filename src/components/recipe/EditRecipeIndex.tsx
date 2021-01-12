@@ -11,24 +11,62 @@ type EditRecipeState = {
 
 interface Props {
   token: string | null;
-  recipeToEdit: any;
+  activeRecipe: UserRecipe;
+}
+
+interface UserRecipe {
+  id: number;
+  recipeName: string;
+  cuisine: string;
+  prepTime: number | null;
+  cookTime: number;
+  directions: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+  user: User[];
+  ingredients: Ingredient[];
+}
+
+interface Ingredient {
+  id: number;
+  name: string;
+  quantity: number;
+  measurement: string;
+  ingredientType: string;
+  createdAt: string;
+  updatedAt: string;
+  recipeId: number;
+  userId: number;
+}
+
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 class EditRecipeIndex extends Component<Props, EditRecipeState> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
     this.state = {
-      recipeName: this.props.recipeToEdit.recipeName,
-      cuisine: this.props.recipeToEdit.cuisine,
-      prepTime: this.props.recipeToEdit.prepTime,
-      cookTime: this.props.recipeToEdit.cookTime,
-      directions: this.props.recipeToEdit.directions,
+      recipeName: this.props.activeRecipe.recipeName,
+      cuisine: this.props.activeRecipe.cuisine,
+      prepTime: this.props.activeRecipe.prepTime,
+      cookTime: this.props.activeRecipe.cookTime,
+      directions: this.props.activeRecipe.directions,
     };
   }
 
-  editRecipe(e: any){
+  editRecipe(e: React.FormEvent<HTMLFormElement>){
       e.preventDefault();
-      fetch(`http://localhost:3210/recipe/${this.props.recipeToEdit.id}`, {
+      fetch(`http://localhost:3210/recipe/${this.props.activeRecipe.id}`, {
           method: 'PUT',
           body: JSON.stringify({
               recipeName: this.state.recipeName,
@@ -47,17 +85,6 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
         })
   }
 
-  setRecipeName(e: any) {
-    this.setState({
-      recipeName: e,
-    });
-  }
-
-  setCuisine(e: any) {
-    this.setState({
-      cuisine: e,
-    });
-  }
 
   setPrepTime(e: any) {
     this.setState({
@@ -66,19 +93,11 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
   }
 
   setCookTime(e: any) {
-    this.setState({
-      cookTime: e,
-    });
-  }
-
-  setDirections(e: any) {
-    this.setState({
-      directions: e,
-    });
+    ;
   }
 
   componentDidMount() {
-    console.log("EditRecipeIndex", this.props.recipeToEdit);
+    console.log("activeRecipe: ", this.props.activeRecipe);
     // console.log("recipe to edit: ", this.state.directions);
   }
 
@@ -91,20 +110,21 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
             label="Recipe Name"
             variant="outlined"
             value={this.state.recipeName}
-            onChange={(e) => this.setRecipeName(e.target.value)}
+            onChange={(e) => this.setState({recipeName: e.target.value})}
           />
           <TextField
             id="outlined-basic"
             label="Cuisine"
             variant="outlined"
             value={this.state.cuisine}
-            onChange={(e) => this.setCuisine(e.target.value)}
+            onChange={(e) => this.setState({cuisine: e.target.value})}
           />
           <TextField
             id="outlined-basic"
             label="Prep Time"
             variant="outlined"
             value={this.state.prepTime}
+            type='number'
             onChange={(e) => this.setPrepTime(e.target.value)}
           />
           <TextField
@@ -112,6 +132,7 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
             label="Cook Time"
             variant="outlined"
             value={this.state.cookTime}
+            type='number'
             onChange={(e) => this.setCookTime(e.target.value)}
           />
           <TextField
@@ -119,7 +140,7 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
             label="Directions"
             variant="outlined"
             value={this.state.directions}
-            onChange={(e) => this.setDirections(e.target.value)}
+            onChange={(e) => this.setState({directions: e.target.value})}
           />
           <Button type="submit" variant="contained">
             Submit Changes

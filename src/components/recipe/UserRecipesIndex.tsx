@@ -24,14 +24,15 @@ import clsx from "clsx";
 import EditRecipeIndex from "./EditRecipeIndex";
 import CreateIngredient from "./ingredient/CreateIngredient";
 import GetIngredient from "./ingredient/GetIngredient";
-import UserRecipesState from '../interface/UserRecipeState'
-import UserRecipe from '../interface/UserRecipe'
+// import UserRecipesState from '../interface/UserRecipeState'
+// import UserRecipe from '../interface/UserRecipe'
 import EditIngredient from "./ingredient/EditIngredient";
 
 const styles = (theme: Theme) =>
   createStyles({
     container: {
       marginTop: "5em",
+      marginBottom: '5em',
       backgroundColor: "gray",
       display: "flex",
       justifyContent: "center",
@@ -68,6 +69,60 @@ const styles = (theme: Theme) =>
     },
   });
 
+  interface UserRecipesState {
+    userRecipes: UserRecipe[];
+    expanded: boolean;
+    open: boolean;
+    editOpen: boolean;
+    ingredientIsOpen: boolean;
+    recipe: UserRecipe[];
+    visible: boolean
+    drawer: boolean
+    message: string;
+    activeRecipe: UserRecipe
+    activeIngredient: Ingredient
+    editIngredient: boolean
+  }
+  
+  interface UserRecipe {
+    id: number;
+    recipeName: string;
+    cuisine: string;
+    prepTime: number | null;
+    cookTime: number;
+    directions: string;
+    createdAt: string;
+    updatedAt: string;
+    userId: number;
+    user: User[];
+    ingredients: Ingredient[];
+  }
+  
+  interface Ingredient {
+    id: number;
+    name: string;
+    quantity: number;
+    measurement: string;
+    ingredientType: string;
+    createdAt: string;
+    updatedAt: string;
+    recipeId: number;
+    userId: number;
+  }
+  
+  interface User {
+    id: number;
+    firstName: string;
+    lastName: string;
+    userName: string;
+    email: string;
+    password: string;
+    role: string;
+    createdAt: string;
+    updatedAt: string;
+  }
+
+
 interface Props extends WithStyles<typeof styles> {
   token: string | null;
 }
@@ -76,113 +131,40 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      userRecipes: [{
-        id: 0,
-        recipeName: '',
-        cuisine: '',
-        prepTime: null,
-        cookTime: 0,
-        directions: '',
-        createdAt: '',
-        updatedAt: '',
-        userId: 0,
-        user: [{
-          id: 0,
-          firstName: '',
-          lastName: '',
-          userName: '',
-          email: '',
-          password: '',
-          role: '',
-          createdAt: '',
-          updatedAt: '',
-        }],
-        ingredients: [{
-          id: 0,
-          name: '',
-          quantity: 0,
-          measurement: '',
-          ingredientType: '',
-          createdAt: '',
-          updatedAt: '',
-          recipeId: 0,
-          userId: 0
-        }]
-      }],
+      userRecipes: [],
       expanded: false,
       open: false,
       editOpen: false,
-      recipeToEdit: [{
-        id: 0,
-        recipeName: '',
-        cuisine: '',
-        prepTime: null,
-        cookTime: 0,
-        directions: '',
-        createdAt: '',
-        updatedAt: '',
-        userId: 0,
-        user: [{
-          id: 0,
-          firstName: '',
-          lastName: '',
-          userName: '',
-          email: '',
-          password: '',
-          role: '',
-          createdAt: '',
-          updatedAt: '',
-        }],
-        ingredients: [{
-          id: 0,
-          name: '',
-          quantity: 0,
-          measurement: '',
-          ingredientType: '',
-          createdAt: '',
-          updatedAt: '',
-          recipeId: 0,
-          userId: 0
-        }]
-      }],
       ingredientIsOpen: false,
-      recipe: [{
-        id: 0,
-        recipeName: '',
-        cuisine: '',
-        prepTime: null,
-        cookTime: 0,
-        directions: '',
-        createdAt: '',
-        updatedAt: '',
-        userId: 0,
-        user: [{
-          id: 0,
-          firstName: '',
-          lastName: '',
-          userName: '',
-          email: '',
-          password: '',
-          role: '',
-          createdAt: '',
-          updatedAt: '',
-        }],
-        ingredients: [{
-          id: 0,
-          name: '',
-          quantity: 0,
-          measurement: '',
-          ingredientType: '',
-          createdAt: '',
-          updatedAt: '',
-          recipeId: 0,
-          userId: 0
-        }]
-      }],
+      recipe: [],
       visible: false,
       drawer: false,
-      editIngredient: '',
-      message: ''
+      message: '',
+      activeRecipe: {
+        id: 0,
+    recipeName: '',
+    cuisine: '',
+    prepTime: 0,
+    cookTime: 0,
+    directions:'',
+    createdAt: '',
+    updatedAt: '',
+    userId: 0,
+    user: [],
+    ingredients: []
+      },
+      activeIngredient: {
+        id: 0,
+    name: '',
+    quantity: 0,
+    measurement: '',
+    ingredientType: '',
+    createdAt: '',
+    updatedAt: '',
+    recipeId: 0,
+    userId: 0
+      },
+      editIngredient: false
     };
   }
 
@@ -206,7 +188,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
   componentDidMount() {
     this.userRecipes();
     console.log("TOKEN: ", this.props.token);
-    console.log('editIngreidient: ', this.state.editIngredient)
+    console.log('activeIngredient: ', this.state.activeIngredient)
   }
 
   deleteRecipe(recipe: UserRecipe) {
@@ -220,7 +202,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
     }).then(() => console.log(this.state.userRecipes));
   }
 
-  deleteIngredient(ingredient: any) {
+  deleteIngredient(ingredient: Ingredient) {
     // console.log('deleteRecipe', this.props.token)
     fetch(`http://localhost:3210/ingredient/${ingredient.id}`, {
       method: "DELETE",
@@ -239,7 +221,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
           <h1>My Recipes</h1>
           {this.state.userRecipes === []
             ? null
-            : this.state.userRecipes.map((recipe: any, index: number) => (
+            : this.state.userRecipes.map((recipe: UserRecipe, index: number) => (
                   <div key={index}>
                   <Card className={classes.root}>
                     <CardHeader
@@ -284,7 +266,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                                         Edit Recipe
                                       </h2>
                                       <EditRecipeIndex
-                                        recipeToEdit={this.state.recipeToEdit}
+                                        activeRecipe={this.state.activeRecipe}
                                         token={this.props.token}
                                       />
                                     </div>
@@ -300,34 +282,34 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                                         Add Ingredient
                                       </h2>
                                       <CreateIngredient
-                                        recipe={this.state.recipe}
+                                        activeRecipe={this.state.activeRecipe}
                                         token={this.props.token}
                                       />
                                     </div>
                                   </Modal>
                                   <Drawer anchor='right' open={this.state.drawer} onClose={()=>this.setState({drawer: false})} >
                                         <List className={clsx(classes.list)}>
-                                          <GetIngredient recipe={this.state.recipe} token={this.props.token} />
+                                          <GetIngredient activeRecipe={this.state.activeRecipe} token={this.props.token} />
                                         </List>
                                   </Drawer>
                                   <MenuItem
                                     onClick={() => {
                                       this.setState({ingredientIsOpen: true});
-                                      this.setState({recipe: recipe});
+                                      this.setState({activeRecipe: recipe});
                                     }}
                                   >
                                     Add Ingredient
                                   </MenuItem>
                                   <MenuItem onClick={() => {
                                     this.setState({drawer: true});
-                                    this.setState({recipe: recipe});
-                                    }}>
-                                    View Ingredients
+                                    this.setState({activeRecipe: recipe});
+                                    }}> 
+                                    Ingredient Checklist
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
                                       this.setState({editOpen: true});
-                                      this.setState({recipeToEdit: recipe});
+                                      this.setState({activeRecipe: recipe});
                                     }}
                                   >
                                     Edit Recipe
@@ -383,14 +365,14 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                         <Typography paragraph>{recipe.directions}</Typography>
                       </CardContent>
                       {recipe.ingredients.length > 0 ? recipe.ingredients.map(
-                        (ingredient: any, index: number) => (
+                        (ingredient: Ingredient, index: number) => (
                           <div key={index}>
                               <CardContent>
                         <Typography paragraph>Ingredients:</Typography>
-                        {this.state.editIngredient === '' ?
-                        <Typography paragraph>{ingredient.name} {ingredient.quantity} {ingredient.measurement} <button onClick={()=> {this.setState({editIngredient: ingredient}); console.log('editIngedient', this.state.editIngredient)}} ><Edit /></button>
+                        {this.state.editIngredient === false ?
+                        <Typography paragraph>{ingredient.name} {ingredient.quantity} {ingredient.measurement} <button onClick={()=> {this.setState({activeIngredient: ingredient, editIngredient: true}); console.log('activeIngedient', this.state.activeIngredient)}} ><Edit /></button>
                         <button><DeleteOutline onClick={()=>this.deleteIngredient(ingredient)}/></button></Typography>
-                        : <div><EditIngredient ingredient={ingredient} token={this.props.token} /><button onClick={()=>{this.setState({editIngredient: ''})}}>Cancel</button></div>
+                        : <div><EditIngredient ingredient={ingredient} token={this.props.token} /><button onClick={()=>{this.setState({editIngredient: false})}}>Cancel</button></div>
                           }
                       </CardContent>
                           </div>
