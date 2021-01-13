@@ -1,11 +1,12 @@
 import React from 'react';
 import AppIndex from './AppIndex';
+import './App.css'
 
 function App() {
   return (
-    <React.Fragment>
-      <AppIndex />
-    </React.Fragment>
+      <div className={'app'}>
+        <AppIndex />
+      </div>
   );
 }
 

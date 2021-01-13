@@ -7,12 +7,24 @@ import UpdateToken from '../interface/UpdateTokenProp'
 const useStyles = makeStyles(() =>
     createStyles({
         container: {
-            marginTop: '5em',
-            backgroundColor: 'gray',
+            background: 'rgba(50, 50, 50, 0.5)',
             display: 'flex',
-            justifyContent: 'center',
-            alignContent: 'center',
-            height: '100%'
+                justifyContent: 'center',
+                alignContent: 'center',
+            height: '70vh',
+            width: '50vw',
+            border: '5px solid #FFAE6C',
+            borderRadius: '5px',
+            overflow: 'auto'
+        },
+        singUpDiv: {
+            display: 'flex',
+                alignItems:'center',
+                flexDirection:'column'
+        },
+        title: {
+            color: '#FFAE6C',
+            marginTop: '3'
         }
     }),
 );
@@ -22,8 +34,8 @@ const SignUp = (props: UpdateToken) => {
 
     return (
         <Container className={classes.container}>
-            <div>
-                <h1>SIGN UP</h1>
+            <div className={classes.singUpDiv}>
+                <h1 className={classes.title}>SIGN UP</h1>
                 <SignUpIndex updateToken={props.updateToken} />
             </div>
         </Container>

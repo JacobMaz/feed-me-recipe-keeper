@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Main from './components/Main';
 import Props from './components/interface/Props'
 import Token from './components/interface/TokenProp'
+import Home from './components/Home';
 
 export default class AppIndex extends Component<{}, Token>{
     constructor(props: Props){
@@ -28,9 +29,13 @@ export default class AppIndex extends Component<{}, Token>{
         console.log('token cleared: ', this.state.token)
     }
 
+    componentDidMount(){
+        return <Home />
+    }
+
     render() {
         return (
-            <div className='app'>
+            <div>
                 <Main updateToken={this.updateToken} token={this.state.token} clearToken={this.clearToken} />
             </div>
         )
