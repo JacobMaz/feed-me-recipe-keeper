@@ -2,17 +2,31 @@ import React from 'react'
 import {Link} from 'react-router-dom';
 import {Button} from '@material-ui/core';
 import ClearToken from '../interface/ClearToken'
+import './Auth.css'
 
 const Auth = (props: ClearToken) => {
-    return (
-        <div>
+
+    const authToggle =()=>{
+        return localStorage.getItem('token') === null ?
             <div>
-                <Link to='/login'><Button>LOG IN</Button></Link>
-                <Link to='/signup'><Button>SIGN UP</Button></Link>
-                <Button onClick={props.clearToken}>LOG OUT</Button>
+            <Link className={'link'} to='/login'><Button id={'button'}>LOG IN</Button></Link>
+            <Link className={'link'} to='/signup'><Button id={'button'}>SIGN UP</Button></Link>
             </div>
-        </div>
-    )
+                : <div className={'auth'}>
+                <Link className={'link'} to='/'><Button id={'button'} onClick={props.clearToken}>LOG OUT</Button></Link>
+                </div>
+    }
+    
+    return (
+            // <div className={'auth'}>
+            //     <Link className={'link'} to='/login'><Button id={'button'}>LOG IN</Button></Link>
+            //     <Link className={'link'} to='/signup'><Button id={'button'}>SIGN UP</Button></Link>
+            //     <Link className={'link'} to='/'><Button id={'button'} onClick={props.clearToken}>LOG OUT</Button></Link>
+            // </div>
+            <div className={'auth'}>
+                {authToggle()}
+            </div>
+    )      
 }
 
 export default Auth;

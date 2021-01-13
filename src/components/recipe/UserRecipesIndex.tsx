@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { ExpandMore, MoreVert, Edit, DeleteOutline } from "@material-ui/icons";
 import {
-  Container,
   Card,
   CardHeader,
   CardMedia,
@@ -28,12 +27,12 @@ import GetIngredient from "./ingredient/GetIngredient";
 // import UserRecipe from '../interface/UserRecipe'
 import EditIngredient from "./ingredient/EditIngredient";
 import APIURL from '../../helpers/environment'
+import recipeImage from '../../assets/katie-smith-uQs1802D0CQ-unsplash.png'
 
 const styles = (theme: Theme) =>
   createStyles({
     container: {
       marginTop: "5em",
-      marginBottom: '5em',
       backgroundColor: "gray",
       display: "flex",
       justifyContent: "center",
@@ -41,10 +40,13 @@ const styles = (theme: Theme) =>
       height: "100%",
     },
     root: {
-      maxWidth: 345,
+      width: '40vw',
+      backgroundColor: '#FFAE6C',
+      border: '3px solid #000A29',
+      color: '#000A29',
+      marginBottom: '1em'
     },
     media: {
-      height: 0,
       paddingTop: "56.25%",
     },
     expand: {
@@ -68,6 +70,9 @@ const styles = (theme: Theme) =>
     list: {
       width: 250,
     },
+    avatar: {
+      backgroundColor: '#000A29'
+    }
   });
 
   interface UserRecipesState {
@@ -217,16 +222,14 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
   render() {
     const { classes } = this.props;
     return (
-      <Container className={classes.container}>
         <div>
-          <h1>My Recipes</h1>
           {this.state.userRecipes === []
             ? null
             : this.state.userRecipes.map((recipe: UserRecipe, index: number) => (
                   <div key={index}>
                   <Card className={classes.root}>
                     <CardHeader
-                      avatar={<Avatar aria-label="recipe">R</Avatar>}
+                      avatar={<Avatar className={classes.avatar} aria-label="recipe">FM</Avatar>}
                       action={
                         <IconButton aria-label="settings">
                           <PopupState
@@ -327,7 +330,7 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                       title={recipe.recipeName}
                       subheader={recipe.cuisine}
                     />
-                    <CardMedia className={classes.media} image="" />
+                    <CardMedia className={classes.media} image={recipeImage} />
                     <CardContent>
                       <Typography
                         variant="body2"
@@ -385,7 +388,6 @@ class UserRecipesIndex extends Component<Props, UserRecipesState> {
                 </div>
               ))}
         </div>
-      </Container>
     );
   }
 }

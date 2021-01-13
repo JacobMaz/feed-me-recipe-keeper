@@ -1,14 +1,63 @@
 import React, { Component } from 'react';
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import { TextField, Button } from '@material-ui/core';
-import UpdateToken from '../interface/UpdateTokenProp'
 import APIURL from '../../helpers/environment';
+import { Link } from 'react-router-dom';
+// import {Redirect} from 'react-router-dom';
 
-type LoginState = {
+interface LoginState {
     userName: string,
     password: string
 }
 
-export default class LoginIndex extends Component<UpdateToken, LoginState>{
+const styles =()=>
+    createStyles({
+        form: {
+            display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+            height: '15em'
+        },
+        button: {
+            backgroundColor: '#FFAE6C',
+            width: '10em',
+            color: '#000A29',
+            '&:hover': {
+                backgroundColor: '#DF6400',
+              },
+            },
+        input: {
+            backgroundColor: '#FFAE6C',
+            borderRadius: '6px',
+            "& label.Mui-focused": {
+              color: "#000A29",
+            },
+            "& .MuiInput-underline:after": {
+              color: '#000A29'
+            },
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "#000A29",
+                color: '#000A29'
+              },
+              "&:hover fieldset": {
+                borderColor: "#D76100",
+                color: '#000A29'
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#FFE500",
+                color: '#000A29'
+              }
+            }
+          }
+    })
+
+interface UpdateToken extends WithStyles<typeof styles> {
+    updateToken: (newToken: string) => void
+}
+
+class LoginIndex extends Component<UpdateToken, LoginState>{
     constructor(props: UpdateToken){
         super(props)
         this.state ={
@@ -30,19 +79,23 @@ export default class LoginIndex extends Component<UpdateToken, LoginState>{
             })
         }).then(response=> response.json())
             .then(data=> {
-                this.props.updateToken(data.token)
+                this.props.updateToken(data.token);
+                // return <Redirect to='/'/>
             })
     }
 
     render() {
+        const{classes} = this.props
         return (
             <div>
-                <form onSubmit={(e)=>this.loginUser(e)} >
-                    <TextField id="outlined-basic" label="Username" variant="outlined" onChange={(e)=>this.setState({userName: (e.target.value)})} />
-                    <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e)=>this.setState({password: (e.target.value)})} />
-                    <Button type='submit' variant='contained'>LOG IN</Button>
+                <form onSubmit={(e)=>this.loginUser(e)} className={classes.form} >
+                    <TextField required className={classes.input} id='filled-required' label="Username" variant="outlined" onChange={(e)=>this.setState({userName: (e.target.value)})} />
+                    <TextField type='password' required className={classes.input} id="outlined-basic" label="Password" variant="outlined" onChange={(e)=>this.setState({password: (e.target.value)})} />
+                     <Button className={classes.button} type='submit' variant='contained'>LOG IN</Button>
                 </form>
             </div>
         )
     }
 }
+
+export default withStyles(styles)(LoginIndex)

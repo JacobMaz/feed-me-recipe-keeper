@@ -145,21 +145,12 @@ class CreateIngredientIndex extends Component<Props, IngredientState> {
             variant="outlined"
             onChange={(e) => this.setQuantity(e.target.value)}
           />
-          <FormControl variant="filled" className={classes.formControl}>
-            <InputLabel id="demo-simple-select-filled-label">Unit</InputLabel>
-            <Select
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
-              value={this.state.measurement}
-              onChange={(e) => this.setMeasurement(e.target.value)}
-            >
-              <MenuItem value=''>
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value="cup">Cup</MenuItem>
-              <MenuItem value="tbls">Tbls</MenuItem>
-            </Select>
-          </FormControl>
+          <TextField
+            id="outlined-basic"
+            label="measurement"
+            variant="outlined"
+            onChange={(e) => this.setMeasurement(e.target.value)}
+          />
           <FormControl variant="filled" className={classes.formControl}>
             <InputLabel id="demo-simple-select-filled-label">Type</InputLabel>
             <Select
