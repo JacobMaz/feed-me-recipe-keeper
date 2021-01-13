@@ -1,4 +1,5 @@
 
 export default interface ClearToken {
-    clearToken:() => void
+    clearToken:() => void,
+    clearRole:()=> void,
 }
