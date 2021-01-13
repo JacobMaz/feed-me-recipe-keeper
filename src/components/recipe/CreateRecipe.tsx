@@ -7,12 +7,24 @@ import Token from '../interface/TokenProp'
 const useStyles = makeStyles(() =>
     createStyles({
         container: {
-            marginTop: '5em',
-            backgroundColor: 'gray',
+            background: 'rgba(50, 50, 50, 0.5)',
             display: 'flex',
-            justifyContent: 'center',
-            alignContent: 'center',
-            height: '100%'
+                justifyContent: 'center',
+                alignContent: 'center',
+            height: '70vh',
+            width: '50vw',
+            border: '5px solid #FFAE6C',
+            borderRadius: '5px',
+            overflow: 'auto'
+        },
+        createRecipeDiv: {
+            display: 'flex',
+                alignItems:'center',
+                flexDirection:'column'
+        },
+        title: {
+            color: '#FFAE6C',
+            marginTop: '3'
         }
     }),
 );
@@ -22,8 +34,8 @@ const CreateRecipe = (props: Token) => {
 
     return (
         <Container className={classes.container} >
-            <div>
-                <h1>Create Recipe</h1>
+            <div className={classes.createRecipeDiv}>
+                <h1 className={classes.title}>Create Recipe</h1>
                 <CreateRecipeIndex token={props.token} />
             </div>
         </Container>

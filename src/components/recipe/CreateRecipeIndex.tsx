@@ -1,17 +1,94 @@
 import React, { Component } from "react";
 import { TextField, Button } from "@material-ui/core";
-import Token from '../interface/TokenProp'
 import APIURL from "../../helpers/environment";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import {Link} from 'react-router-dom';
 
-type RecipeState = {
+interface RecipeState {
   recipeName: string;
   cuisine: string;
   prepTime: number | null | string;
   cookTime: number | string;
   directions: string;
-};
+}
 
-export default class CreateRecipeIndex extends Component<Token, RecipeState> {
+const styles =()=>
+    createStyles({
+        form: {
+            display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+            height: '60vh',
+            marginBottom: '3vh'
+        },
+        button: {
+            backgroundColor: '#FFAE6C',
+            color: '#000A29',
+            '&:hover': {
+                backgroundColor: '#DF6400',
+              },
+            },
+            link: {
+              textDecoration: 'none'
+          },
+        input: {
+            backgroundColor: '#FFAE6C',
+            borderRadius: '6px',
+            width: '20vw',
+            "& label.Mui-focused": {
+              color: "#000A29",
+            },
+            "& .MuiInput-underline:after": {
+              color: '#000A29'
+            },
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "#000A29",
+                color: '#000A29'
+              },
+              "&:hover fieldset": {
+                borderColor: "#D76100",
+                color: '#000A29'
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#FFE500",
+                color: '#000A29'
+              }
+            }
+          },
+          inputDirections: {
+            backgroundColor: '#FFAE6C',
+            borderRadius: '6px',
+            width: '30vw',
+            "& label.Mui-focused": {
+              color: "#000A29",
+            },
+            "& .MuiInput-underline:after": {
+              color: '#000A29'
+            },
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "#000A29",
+                color: '#000A29'
+              },
+              "&:hover fieldset": {
+                borderColor: "#D76100",
+                color: '#000A29'
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#FFE500",
+                color: '#000A29'
+              }
+            }
+          }
+    })
+
+interface Token extends WithStyles<typeof styles>{
+  token: string | null
+}
+
+class CreateRecipeIndex extends Component<Token, RecipeState> {
   constructor(props: Token) {
     super(props);
     this.state = {
@@ -50,22 +127,26 @@ export default class CreateRecipeIndex extends Component<Token, RecipeState> {
   }
 
   render() {
+    const{classes} = this.props
     return (
       <div>
-        <form onSubmit={(e) => this.createRecipe(e)}>
+        <form className={classes.form} onSubmit={(e) => this.createRecipe(e)}>
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Recipe Name"
             variant="outlined"
             onChange={(e) => this.setState({recipeName: e.target.value})}
           />
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Cuisine"
             variant="outlined"
             onChange={(e) => this.setState({cuisine: e.target.value})}
           />
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Prep Time(in mins)"
             variant="outlined"
@@ -73,6 +154,7 @@ export default class CreateRecipeIndex extends Component<Token, RecipeState> {
             onChange={(e) => this.setState({prepTime: e.target.value})}
           />
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Cook Time(in mins)"
             variant="outlined"
@@ -80,12 +162,15 @@ export default class CreateRecipeIndex extends Component<Token, RecipeState> {
             onChange={(e) => this.setState({cookTime: e.target.value})}
           />
           <TextField
+            className={classes.inputDirections}
             id="outlined-basic"
             label="Directions"
             variant="outlined"
+            multiline
+            rowsMax={10}
             onChange={(e) => this.setState({directions: e.target.value})}
           />
-          <Button type="submit" variant="contained">
+            <Button className={classes.button} type="submit" variant="contained">
             Add Recipe
           </Button>
         </form>
@@ -93,3 +178,5 @@ export default class CreateRecipeIndex extends Component<Token, RecipeState> {
     );
   }
 }
+
+export default withStyles(styles)(CreateRecipeIndex);
