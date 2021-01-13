@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { createStyles, WithStyles, Theme, withStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
 import {
-  Container,
   Card,
   CardHeader,
   CardMedia,
@@ -17,6 +16,7 @@ import { ExpandMore } from "@material-ui/icons";
 import GetRecipeState from '../interface/GetRecipeState'
 import AllRecipe from '../interface/AllRecipeInterface'
 import APIURL from "../../helpers/environment";
+import recipeImage from '../../assets/katie-smith-uQs1802D0CQ-unsplash.png'
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -29,10 +29,13 @@ const styles = (theme: Theme) =>
       height: "100%",
     },
     root: {
-      maxWidth: 345,
+      width: '40vw',
+      backgroundColor: '#FFAE6C',
+      border: '3px solid #000A29',
+      color: '#000A29',
+      marginBottom: '1em'
     },
     media: {
-      height: 0,
       paddingTop: "56.25%",
     },
     expand: {
@@ -45,6 +48,9 @@ const styles = (theme: Theme) =>
     expandOpen: {
       transform: "rotate(180deg)",
     },
+    avatar: {
+      backgroundColor: '#000A29'
+    }
   });
 
 interface Props extends WithStyles<typeof styles>{}
@@ -79,32 +85,31 @@ class GetRecipeIndex extends Component<Props, GetRecipeState> {
   render() {
     const { classes } = this.props;
     return (
-      <Container className={classes.container}>
-        <h1>All Recipes</h1>
+      <div>
         {this.state.allRecipe.length > 0 &&
           this.state.allRecipe.map((recipe: AllRecipe, index: number) => (
             <div key={index}>
               <Card className={classes.root}>
                 <CardHeader
-                  avatar={<Avatar aria-label="recipe">R</Avatar>}
+                  avatar={<Avatar className={classes.avatar} aria-label="recipe">FM</Avatar>}
                   title={recipe.recipeName}
                   subheader={recipe.cuisine}
                 />
-                <CardMedia className={classes.media} image="" />
+                <CardMedia className={classes.media} image={recipeImage} />
                 <CardContent>
                   <Typography
                     variant="body2"
                     color="textSecondary"
                     component="p"
                   >
-                    Prep Time: {recipe.prepTime}
+                    Prep Time: {recipe.prepTime} mins
                   </Typography>
                   <Typography
                     variant="body2"
                     color="textSecondary"
                     component="p"
                   >
-                    Cook Time: {recipe.cookTime}
+                    Cook Time: {recipe.cookTime} mins
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -128,7 +133,7 @@ class GetRecipeIndex extends Component<Props, GetRecipeState> {
               </Card>
             </div>
           ))}
-      </Container>
+      </div>
     );
   }
 }

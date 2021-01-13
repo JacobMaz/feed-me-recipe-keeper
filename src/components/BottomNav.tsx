@@ -1,30 +1,49 @@
 import React, { Component } from 'react';
-import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import { createStyles, makeStyles } from '@material-ui/core/styles'
+import { BottomNavigation, BottomNavigationAction, withStyles, WithStyles } from '@material-ui/core';
 import { AddCircleOutline, MenuBook, Person } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
-class BottomNav extends Component {
-    state = {
-        value: 0
+const styles =() =>
+    createStyles({
+        bottomNav: {
+            backgroundColor: '#000A29',
+        },
+        icon: {
+            color: '#FFAE6C'
+        },
+        link: {
+            textDecoration: 'none'
+        }
+    })
+
+interface Props extends WithStyles<typeof styles>{
+    token: string | null
+}
+
+class BottomNav extends Component<Props, {}> {
+    constructor(props: Props){
+        super(props)
     }
+    
 
     render() {
-        const { value } = this.state;
+        const{classes} = this.props
 
         return (
-            <BottomNavigation value={value} onChange={()=>this.setState({ value })}>
-                <Link to='/createRecipe'>
-                    <BottomNavigationAction label='Add Recipe' showLabel icon={<AddCircleOutline />} />
+            <BottomNavigation className={classes.bottomNav}>
+                <Link className={classes.link} to='/createRecipe'>
+                    <BottomNavigationAction className={classes.icon} label='Add Recipe' showLabel icon={<AddCircleOutline className={classes.icon} />} />
                 </Link>
-                <Link to='/getRecipe'>
-                    <BottomNavigationAction label='View Recipes' showLabel icon={<MenuBook />} />
+                <Link className={classes.link} to='/getRecipe'>
+                    <BottomNavigationAction className={classes.icon} label='View Recipes' showLabel icon={<MenuBook className={classes.icon} />} />
                 </Link>
-                <Link to='/userRecipes'>
-                    <BottomNavigationAction label='My Recipes' showLabel icon={<Person />} />
+                <Link className={classes.link} to='/userRecipes'>
+                    <BottomNavigationAction className={classes.icon} label='My Recipes' showLabel icon={<Person className={classes.icon} />} />
                 </Link>
             </BottomNavigation>
         )
     }
 }
 
-export default BottomNav;
+export default withStyles(styles)(BottomNav);
