@@ -36,7 +36,7 @@ const SignUp = (props: UpdateToken) => {
         <Container className={classes.container}>
             <div className={classes.singUpDiv}>
                 <h1 className={classes.title}>SIGN UP</h1>
-                <SignUpIndex updateToken={props.updateToken} />
+                <SignUpIndex updateRole={props.updateRole} updateToken={props.updateToken} />
             </div>
         </Container>
     )
