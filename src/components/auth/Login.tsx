@@ -36,7 +36,7 @@ const Login =(props: UpdateToken)=>{
         <Container className={classes.container}>
             <div className={classes.loginDiv}>
                 <h1 className={classes.title}>LOG IN</h1>
-                <LoginIndex updateToken={props.updateToken} />
+                <LoginIndex updateRole={props.updateRole} updateToken={props.updateToken} />
             </div>
         </Container>
     )

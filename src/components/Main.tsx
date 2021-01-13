@@ -10,6 +10,7 @@ import CreateRecipe from './recipe/CreateRecipe';
 import Props from './interface/Props'
 import GetRecipe from './recipe/GetRecipe';
 import UserRecipes from './recipe/UserRecipes';
+import Admin from './recipe/Admin';
 
 const useStyles = makeStyles(()=>
     createStyles({
@@ -38,16 +39,17 @@ const Main = (props: Props) => {
     return (
             <React.Fragment>
                 <Router>
-                     <NavbBar clearToken={props.clearToken} />
+                     <NavbBar token={props.token} role={props.role} clearToken={props.clearToken} clearRole={props.clearRole} />
                     <Switch>
                         <div className={classes.mainDiv}>
                             <div>
+                                <Route exact path='/admin' render={()=>(<Admin token={props.token} role={props.role} />)} />
                                 <Route exact path='/' render={()=>(<Home />)} />
-                                <Route exact path='/signup' render={()=>(<SignUp updateToken={props.updateToken} />)} />
-                                <Route exact path='/login' render={()=>(<Login updateToken={props.updateToken} />)} />
-                                <Route exact path='/createRecipe' render={()=>(<CreateRecipe token={props.token} />)} />
-                                <Route exact path='/getRecipe' render={()=>(<GetRecipe />)} />
-                                <Route exact path='/userRecipes' render={()=>(<UserRecipes token={props.token} />)} />
+                                <Route exact path='/signup' render={()=>(<SignUp updateRole={props.updateRole} updateToken={props.updateToken} />)} />
+                                <Route exact path='/login' render={()=>(<Login updateRole={props.updateRole} updateToken={props.updateToken} />)} />
+                                <Route exact path='/createRecipe' render={()=>(<CreateRecipe role={props.role} token={props.token} />)} />
+                                <Route exact path='/getRecipe' render={()=>(<GetRecipe role={props.role} />)} />
+                                <Route exact path='/userRecipes' render={()=>(<UserRecipes role={props.role} token={props.token} />)} />
                             </div> 
                         </div>
                     </Switch>

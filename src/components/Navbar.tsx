@@ -4,8 +4,8 @@ import { AppBar, Toolbar } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Auth from './auth/Auth';
 import { Link } from 'react-router-dom';
-import ClearToken from './interface/ClearToken'
 import smallFeedMeLogo from '../assets/smallfeedmelogo.png'
+import Admin from './recipe/Admin';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -32,8 +32,20 @@ const useStyles = makeStyles(() =>
     }),
 );
 
+
+interface ClearToken {
+    clearToken:() => void,
+    clearRole:()=> void,
+    role: string | null,
+    token: string | null,
+}
+
 const NavbBar = (props: ClearToken) => {
     const classes = useStyles();
+
+    const admin =()=>{
+        return props.role === 'admin' ? <Link to='/admin'>Admin</Link> : null
+    }
 
     return (
         <AppBar position='fixed' className={classes.appBar} >
@@ -41,12 +53,13 @@ const NavbBar = (props: ClearToken) => {
                 <Grid container spacing={3}>
                     <Grid item xs className={classes.logo}>
                         <Link to='/'><img src={smallFeedMeLogo} className={classes.feedMeLogo}/></Link>
+                        {admin()}
                     </Grid>
                     <Grid item xs={6} className={classes.title}>
                         <h2>Feed Me: Recipe Keeper</h2>
                     </Grid>
                     <Grid item xs className={classes.logSignButtons}>
-                        <Auth clearToken={props.clearToken} />
+                        <Auth clearRole={props.clearRole} clearToken={props.clearToken} />
                     </Grid>
                 </Grid>
             </Toolbar>
