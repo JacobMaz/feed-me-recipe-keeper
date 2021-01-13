@@ -18,6 +18,7 @@ import AllRecipe from '../interface/AllRecipeInterface'
 import APIURL from "../../helpers/environment";
 import recipeImage from '../../assets/katie-smith-uQs1802D0CQ-unsplash.png'
 
+
 const styles = (theme: Theme) =>
   createStyles({
     container: {
@@ -53,7 +54,9 @@ const styles = (theme: Theme) =>
     }
   });
 
-interface Props extends WithStyles<typeof styles>{}
+interface Props extends WithStyles<typeof styles>{
+  role: string | null
+}
 
 class GetRecipeIndex extends Component<Props, GetRecipeState> {
   constructor(props: Props) {
@@ -78,8 +81,120 @@ class GetRecipeIndex extends Component<Props, GetRecipeState> {
       });
   }
 
+//   admin(){
+//     return this.props.role === 'admin' ? 
+//     <CardHeader
+//     avatar={<Avatar className={classes.avatar} aria-label="recipe">FM</Avatar>}
+//     action={
+//       <IconButton aria-label="settings">
+//         <PopupState
+//           variant="popover"
+//           popupId="demo-popup-menu"
+//         >
+//           {(popupState) => (
+//             <React.Fragment>
+//               <MoreVert {...bindTrigger(popupState)} />
+//               <Menu {...bindMenu(popupState)}>
+//                 <Modal
+//                   open={this.state.open}
+//                   onClose={() => this.setState({open: false})}
+//                   aria-labelledby="simple-modal-title"
+//                   aria-describedby="simple-modal-description"
+//                 >
+//                   <div className={classes.paper}>
+//                     <h2 id="simple-modal-title">Warning!</h2>
+//                     <p>You are about to DELETE a recipe!</p>
+//                     <Button
+//                       onClick={() =>
+//                         this.deleteRecipe(recipe)
+//                       }
+//                     >
+//                       Delete Recipe
+//                     </Button>
+//                     <Button>Cancel</Button>
+//                   </div>
+//                 </Modal>
+//                 <Modal
+//                   open={this.state.editOpen}
+//                   onClose={() => this.setState({editOpen: false})}
+//                   aria-labelledby="simple-modal-title"
+//                   aria-describedby="simple-modal-description"
+//                 >
+//                   <div className={classes.paper}>
+//                     <h2 id="simple-modal-title">
+//                       Edit Recipe
+//                     </h2>
+//                     <EditRecipeIndex
+//                       activeRecipe={this.state.activeRecipe}
+//                       token={this.props.token}
+//                     />
+//                   </div>
+//                 </Modal>
+//                 <Modal
+//                   open={this.state.ingredientIsOpen}
+//                   onClose={() => this.setState({ingredientIsOpen: false})}
+//                   aria-labelledby="simple-modal-title"
+//                   aria-describedby="simple-modal-description"
+//                 >
+//                   <div className={classes.paper}>
+//                     <h2 id="simple-modal-title">
+//                       Add Ingredient
+//                     </h2>
+//                     <CreateIngredient
+//                       activeRecipe={this.state.activeRecipe}
+//                       token={this.props.token}
+//                     />
+//                   </div>
+//                 </Modal>
+//                 <Drawer anchor='right' open={this.state.drawer} onClose={()=>this.setState({drawer: false})} >
+//                       <List className={clsx(classes.list)}>
+//                         <GetIngredient activeRecipe={this.state.activeRecipe} token={this.props.token} />
+//                       </List>
+//                 </Drawer>
+//                 <MenuItem
+//                   onClick={() => {
+//                     this.setState({ingredientIsOpen: true});
+//                     this.setState({activeRecipe: recipe});
+//                   }}
+//                 >
+//                   Add Ingredient
+//                 </MenuItem>
+//                 <MenuItem onClick={() => {
+//                   this.setState({drawer: true});
+//                   this.setState({activeRecipe: recipe});
+//                   }}> 
+//                   Ingredient Checklist
+//                 </MenuItem>
+//                 <MenuItem
+//                   onClick={() => {
+//                     this.setState({editOpen: true});
+//                     this.setState({activeRecipe: recipe});
+//                   }}
+//                 >
+//                   Edit Recipe
+//                 </MenuItem>
+//                 <MenuItem onClick={() => this.setState({open: true})}>
+//                   Delete Recipe
+//                 </MenuItem>
+//               </Menu>
+//             </React.Fragment>
+//           )}
+//         </PopupState>
+//       </IconButton>
+//     }
+//     title={recipe.recipeName}
+//     subheader={recipe.cuisine}
+//   />
+//   : <CardHeader
+//   avatar={<Avatar className={classes.avatar} aria-label="recipe">FM</Avatar>}
+//   title={recipe.recipeName}
+//   subheader={recipe.cuisine}
+// />
+//   }
+
   componentDidMount() {
     this.allRecipes();
+    console.log('role: ', this.props.role)
   }
 
   render() {

@@ -57,7 +57,8 @@ const styles =()=>
     })
 
 interface UpdateToken extends WithStyles<typeof styles> {
-        updateToken: (newToken: string) => void
+        updateToken: (newToken: string) => void,
+        updateRole: (newRole: string) => void
     }
 
 class SignUpIndex extends Component<UpdateToken, SignUpState>{
@@ -89,8 +90,9 @@ class SignUpIndex extends Component<UpdateToken, SignUpState>{
             })
         }).then((response) => response.json())
             .then((data) => {
-                this.props.updateToken(data.token)
-            //    console.log(data.token)
+                this.props.updateToken(data.token);
+                this.props.updateRole(data.user.role)
+            //    console.log(data)
             })
     }
 

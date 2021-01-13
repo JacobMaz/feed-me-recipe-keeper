@@ -27,14 +27,18 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-const GetRecipe = () => {
+interface Props {
+    role: string | null
+}
+
+const GetRecipe = (props: Props) => {
     const classes = useStyles();
     
     return (
         <Container className={classes.container}>
             <div className={classes.allRecipesDiv}>
                <h1 className={classes.title}>All Recipes</h1>
-                <GetRecipeIndex /> 
+                <GetRecipeIndex role={props.role} /> 
             </div>
         </Container>
     )
