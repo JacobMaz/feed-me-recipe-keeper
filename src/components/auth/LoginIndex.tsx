@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import { TextField, Button } from '@material-ui/core';
 import APIURL from '../../helpers/environment';
-import { Link } from 'react-router-dom';
-// import {Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 interface LoginState {
     userName: string,
     password: string
+    redirect: string
 }
 
 const styles =()=>
@@ -54,7 +54,8 @@ const styles =()=>
     })
 
 interface UpdateToken extends WithStyles<typeof styles> {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string) => void,
+    updateRole: (newRole: string) => void
 }
 
 class LoginIndex extends Component<UpdateToken, LoginState>{
@@ -62,7 +63,8 @@ class LoginIndex extends Component<UpdateToken, LoginState>{
         super(props)
         this.state ={
             userName: '',
-            password: ''
+            password: '',
+            redirect: ''
         }
     }
 
@@ -80,12 +82,21 @@ class LoginIndex extends Component<UpdateToken, LoginState>{
         }).then(response=> response.json())
             .then(data=> {
                 this.props.updateToken(data.token);
-                // return <Redirect to='/'/>
+                this.props.updateRole(data.user.role)
+                this.setState({
+                    redirect: '/'
+                })
+            })
+            .catch(err=>{
+                console.log(err)
             })
     }
 
     render() {
         const{classes} = this.props
+        if (this.state.redirect){
+            return <Redirect to={this.state.redirect}/>
+        }
         return (
             <div>
                 <form onSubmit={(e)=>this.loginUser(e)} className={classes.form} >

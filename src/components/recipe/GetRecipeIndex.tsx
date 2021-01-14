@@ -13,10 +13,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
-import GetRecipeState from '../interface/GetRecipeState'
-import AllRecipe from '../interface/AllRecipeInterface'
 import APIURL from "../../helpers/environment";
 import recipeImage from '../../assets/katie-smith-uQs1802D0CQ-unsplash.png'
+
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -53,7 +52,53 @@ const styles = (theme: Theme) =>
     }
   });
 
-interface Props extends WithStyles<typeof styles>{}
+  interface GetRecipeState {
+    allRecipe: AllRecipe[];
+    message: string;
+    expanded: boolean;
+  }
+  
+  interface AllRecipe {
+    id: number;
+    recipeName: string;
+    cuisine: string;
+    prepTime: number;
+    cookTime: number;
+    directions: string;
+    createdAt: string;
+    updatedAt: string;
+    userId: number;
+    user: User;
+    ingredients: Ingredient[];
+  }
+  
+  interface Ingredient {
+    id: number;
+    name: string;
+    quantity: string;
+    measurement: string;
+    ingredientType: string;
+    createdAt: string;
+    updatedAt: string;
+    recipeId: number;
+    userId: number;
+  }
+  
+  interface User {
+    id: number;
+    firstName: string;
+    lastName: string;
+    userName: string;
+    email: string;
+    password: string;
+    role: string;
+    createdAt: string;
+    updatedAt: string;
+  }
+
+interface Props extends WithStyles<typeof styles>{
+  role: string | null
+}
 
 class GetRecipeIndex extends Component<Props, GetRecipeState> {
   constructor(props: Props) {
@@ -80,6 +125,7 @@ class GetRecipeIndex extends Component<Props, GetRecipeState> {
 
   componentDidMount() {
     this.allRecipes();
+    console.log('role: ', this.props.role)
   }
 
   render() {
@@ -129,6 +175,52 @@ class GetRecipeIndex extends Component<Props, GetRecipeState> {
                     <Typography paragraph>Directions:</Typography>
                     <Typography paragraph>{recipe.directions}</Typography>
                   </CardContent>
+                  {recipe.ingredients.length > 0 ? recipe.ingredients.map(
+                        (ingredient: Ingredient, index: number) => (
+                          <div key={index}>
+                              <CardContent>
+                        <Typography paragraph>Ingredients:</Typography>
+                        <br />
+                        <Typography paragraph>Main:</Typography>
+                        {ingredient.ingredientType === 'Main' ? 
+                        <div>
+                          <Typography paragraph>{ingredient.name}: {ingredient.quantity} {ingredient.measurement}</Typography>
+                        </div>
+                        : null
+                      }
+                      <Typography paragraph>Produce:</Typography>
+                      {ingredient.ingredientType === 'Produce' ? 
+                        <div>
+                          <Typography paragraph>{ingredient.name}: {ingredient.quantity} {ingredient.measurement}</Typography>
+                        </div>
+                        : null
+                      }
+                      <Typography paragraph>Sauces:</Typography>
+                      {ingredient.ingredientType === 'Sauces' ? 
+                        <div>
+                          <Typography paragraph>{ingredient.name}: {ingredient.quantity} {ingredient.measurement}</Typography>
+                        </div>
+                        : null
+                      }
+                      <Typography paragraph>Sugar and Spices:</Typography>
+                      {ingredient.ingredientType === 'Sugar and Spices' ? 
+                        <div>
+                          <Typography paragraph>{ingredient.name}: {ingredient.quantity} {ingredient.measurement}</Typography>
+                        </div>
+                        : null
+                      }
+                      <Typography paragraph>Baking:</Typography>
+                      {ingredient.ingredientType === 'Baking' ? 
+                        <div>
+                          <Typography paragraph>{ingredient.name}: {ingredient.quantity} {ingredient.measurement}</Typography>
+                        </div>
+                        : null
+                      }
+                      </CardContent>
+                          </div>
+                        )
+                      )
+                      : null}
                 </Collapse>
               </Card>
             </div>

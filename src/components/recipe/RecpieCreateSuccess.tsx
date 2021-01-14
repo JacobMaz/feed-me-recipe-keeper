@@ -15,7 +15,7 @@ const useStyles = makeStyles(() =>
             borderRadius: '5px',
             overflow: 'auto'
         },
-        allRecipesDiv: {
+        successDiv: {
             display: 'flex',
                 alignItems:'center',
                 flexDirection:'column',
@@ -27,21 +27,17 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-interface Props {
-    role: string | null
-}
-
-const GetRecipe = (props: Props) => {
+const RecipeSuccess = () => {
     const classes = useStyles();
     
     return (
         <Container className={classes.container}>
-            <div className={classes.allRecipesDiv}>
-               <h1 className={classes.title}>All Recipes</h1>
-                <GetRecipeIndex role={props.role} /> 
+            <div className={classes.successDiv}>
+               <h1 className={classes.title}>Success!</h1>
+               <p>You successfully created a Recipe!</p>
             </div>
         </Container>
     )
 }
 
-export default GetRecipe;
+export default RecipeSuccess;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createStyles, makeStyles } from '@material-ui/core/styles'
+import { createStyles } from '@material-ui/core/styles'
 import { BottomNavigation, BottomNavigationAction, withStyles, WithStyles } from '@material-ui/core';
 import { AddCircleOutline, MenuBook, Person } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
@@ -22,10 +22,6 @@ interface Props extends WithStyles<typeof styles>{
 }
 
 class BottomNav extends Component<Props, {}> {
-    constructor(props: Props){
-        super(props)
-    }
-    
 
     render() {
         const{classes} = this.props
