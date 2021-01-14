@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { createStyles, WithStyles, Theme, withStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
 import {
+  Container,
   Card,
   CardHeader,
   CardMedia,
@@ -25,23 +26,28 @@ import { ExpandMore, MoreVert, Edit, DeleteOutline } from "@material-ui/icons";
 import EditRecipeIndex from "./EditRecipeIndex";
 import CreateIngredient from "./ingredient/CreateIngredient";
 import GetIngredient from "./ingredient/GetIngredient";
+import EditIngredient from "./ingredient/EditIngredient";
 
 
 const styles = (theme: Theme) =>
   createStyles({
     container: {
-      marginTop: "5em",
-      backgroundColor: "gray",
-      display: "flex",
-      justifyContent: "center",
-      alignContent: "center",
-      height: "100%",
-    },
+      background: 'rgba(50, 50, 50, 0.5)',
+      display: 'flex',
+          justifyContent: 'center',
+          alignContent: 'center',
+      height: '70vh',
+      width: '50vw',
+      border: '5px solid #FFAE6C',
+      borderRadius: '5px',
+      overflow: 'auto'
+  },
     root: {
       width: '40vw',
       backgroundColor: '#FFAE6C',
       border: '3px solid #000A29',
       color: '#000A29',
+      marginTop: '1em',
       marginBottom: '1em'
     },
     media: {
@@ -181,7 +187,7 @@ class Admin extends Component<Props, UserRecipesState> {
         this.setState({
           userRecipes: data.allRecipe,
         });
-        console.log("response", data.allRecipe);
+        console.log("userRecipes", this.state.userRecipes);
       });
   }
 
@@ -216,8 +222,9 @@ class Admin extends Component<Props, UserRecipesState> {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        {this.state.userRecipes === [] &&
+      <Container className={classes.container}>
+        <div>
+          {this.state.userRecipes === [] ? null :
           this.state.userRecipes.map((recipe: UserRecipe, index: number) => (
             <div key={index}>
               <Card className={classes.root}>
@@ -357,11 +364,28 @@ class Admin extends Component<Props, UserRecipesState> {
                     <Typography paragraph>Directions:</Typography>
                     <Typography paragraph>{recipe.directions}</Typography>
                   </CardContent>
+                  {recipe.ingredients.length > 0 ? recipe.ingredients.map(
+                        (ingredient: Ingredient, index: number) => (
+                          <div key={index}>
+                              <CardContent>
+                        <Typography paragraph>Ingredients:</Typography>
+                        {this.state.editIngredient === false ?
+                        <Typography paragraph>{ingredient.name} {ingredient.quantity} {ingredient.measurement} <button onClick={()=> {this.setState({activeIngredient: ingredient, editIngredient: true}); console.log('activeIngedient', this.state.activeIngredient)}} ><Edit /></button>
+                        <button><DeleteOutline onClick={()=>this.deleteIngredient(ingredient)}/></button></Typography>
+                        : <div><EditIngredient ingredient={ingredient} token={this.props.token} /><button onClick={()=>{this.setState({editIngredient: false})}}>Cancel</button></div>
+                          }
+                      </CardContent>
+                          </div>
+                        )
+                      )
+                      : null}
                 </Collapse>
               </Card>
             </div>
           ))}
-      </div>
+        </div>
+        
+      </Container>
     );
   }
 }

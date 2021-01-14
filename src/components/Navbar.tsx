@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Auth from './auth/Auth';
 import { Link } from 'react-router-dom';
 import smallFeedMeLogo from '../assets/smallfeedmelogo.png'
-import Admin from './recipe/Admin';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -28,6 +27,11 @@ const useStyles = makeStyles(() =>
         logo: {
             display: 'flex',
             alignItems: 'center'
+        },
+        admin: {
+            textDecoration: 'none',
+            color: '#FFAE6C',
+            marginLeft: '1em'
         }
     }),
 );
@@ -44,7 +48,7 @@ const NavbBar = (props: ClearToken) => {
     const classes = useStyles();
 
     const admin =()=>{
-        return props.role === 'admin' ? <Link to='/admin'>Admin</Link> : null
+        return props.role === 'admin' ? <Link className={classes.admin} to='/admin'>Admin</Link> : null
     }
 
     return (
