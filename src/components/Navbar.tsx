@@ -56,7 +56,7 @@ const NavbBar = (props: ClearToken) => {
             <Toolbar>
                 <Grid container spacing={3}>
                     <Grid item xs className={classes.logo}>
-                        <Link to='/'><img src={smallFeedMeLogo} className={classes.feedMeLogo}/></Link>
+                        <Link to='/'><img src={smallFeedMeLogo} alt={'FM'} className={classes.feedMeLogo}/></Link>
                         {admin()}
                     </Grid>
                     <Grid item xs={6} className={classes.title}>

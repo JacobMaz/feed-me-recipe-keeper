@@ -42,7 +42,7 @@ const Home = () => {
         <Container className={classes.container}>
             <div className={classes.homeDiv}>
                 <div>
-                    <img src={feedMeLogo} />
+                    <img src={feedMeLogo} alt={'Feed Me: Recipe Keeper'} />
                 </div>
                 <div>
                     <Link to='/getRecipe' className={classes.link}>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { TextField, Button } from "@material-ui/core";
 import APIURL from "../../helpers/environment";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
-import {Link} from 'react-router-dom';
+import { Redirect } from "react-router";
 
 interface RecipeState {
   recipeName: string;
@@ -10,6 +10,7 @@ interface RecipeState {
   prepTime: number | null | string;
   cookTime: number | string;
   directions: string;
+  createRecipeSuccess: string
 }
 
 const styles =()=>
@@ -97,6 +98,7 @@ class CreateRecipeIndex extends Component<Token, RecipeState> {
       prepTime: null,
       cookTime: 0,
       directions: "",
+      createRecipeSuccess: '',
     };
   }
 
@@ -123,11 +125,17 @@ class CreateRecipeIndex extends Component<Token, RecipeState> {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+          this.setState({
+            createRecipeSuccess: '/recipeSuccess'
+          })
       });
   }
 
   render() {
     const{classes} = this.props
+    if (this.state.createRecipeSuccess){
+      return <Redirect to={this.state.createRecipeSuccess}/>
+    }
     return (
       <div>
         <form className={classes.form} onSubmit={(e) => this.createRecipe(e)}>
