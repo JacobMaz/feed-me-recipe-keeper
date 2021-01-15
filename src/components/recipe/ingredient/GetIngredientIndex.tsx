@@ -78,8 +78,6 @@ class GetIngredientIndex extends Component<Props, GetIngredientState> {
       });
   }
 
-  handleCheck() {}
-
   componentDidMount() {
     // console.log("GetIngredientInedx: ", this.state.recipeId);
     this.ingredients();
@@ -90,11 +88,11 @@ class GetIngredientIndex extends Component<Props, GetIngredientState> {
     return (
       <div>
         <div>
-              {this.state.ingredients === [] ? <div><h3>No Ingredients</h3></div> : this.state.ingredients.map((ingredient: Ingredient, index: number) => (
+              {this.state.ingredients === [] ? <div><h3>No Ingredients</h3></div> : this.state.ingredients.map((ingredient: Ingredient) => (
                   <div>
-                    <FormControlLabel key={index}
+                    <FormControlLabel key={ingredient.id}
                       value="end"
-                      control={<Checkbox color="primary" checked={this.state.checked}
+                      control={<Checkbox color="primary"
                       onChange={() => this.setState({ checked: !this.state.checked })} />}
                       label={ingredient.name}
                       labelPlacement="end"
