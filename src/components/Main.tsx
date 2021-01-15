@@ -11,6 +11,7 @@ import Props from './interface/Props'
 import GetRecipe from './recipe/GetRecipe';
 import UserRecipes from './recipe/UserRecipes';
 import Admin from './recipe/Admin';
+import RecipeSuccess from './recipe/RecpieCreateSuccess';
 
 const useStyles = makeStyles(()=>
     createStyles({
@@ -43,6 +44,7 @@ const Main = (props: Props) => {
                     <Switch>
                         <div className={classes.mainDiv}>
                             <div>
+                                <Route exact path='/recipeSuccess' render={()=>(<RecipeSuccess />)} />
                                 <Route exact path='/admin' render={()=>(<Admin token={props.token} role={props.role} />)} />
                                 <Route exact path='/' render={()=>(<Home />)} />
                                 <Route exact path='/signup' render={()=>(<SignUp updateRole={props.updateRole} updateToken={props.updateToken} />)} />
