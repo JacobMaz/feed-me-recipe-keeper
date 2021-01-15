@@ -7,7 +7,6 @@ const useStyles = makeStyles(() =>
     createStyles({
         container: {
             marginTop: '5em',
-            backgroundColor: 'gray',
             display: 'flex',
             justifyContent: 'center',
             alignContent: 'center',

@@ -1,6 +1,78 @@
 import React, { Component } from "react";
 import { TextField, Button } from "@material-ui/core";
 import APIURL from "../../helpers/environment";
+import { createStyles, withStyles, WithStyles, Theme } from "@material-ui/core/styles";
+
+const styles = (theme: Theme) =>
+  createStyles({
+    formControl: {
+      backgroundColor: '#FFC28F',
+      borderRadius: '6px',
+      width: '20vw',
+      "& label.Mui-focused": {
+        color: "#000A29",
+      },
+      "& .MuiInput-underline:after": {
+        color: '#000A29'
+      },
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          borderColor: "#000A29",
+          color: '#000A29'
+        },
+        "&:hover fieldset": {
+          borderColor: "#D76100",
+          color: '#000A29'
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: "#FFE500",
+          color: '#000A29'
+        }
+      }
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+    form: {
+      height: '26em',
+      display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-evenly'
+    },
+    button: {
+      backgroundColor: '#000A29',
+      color: '#FFAE6C',
+      '&:hover': {
+          backgroundColor: '#DF6400',
+        },
+    },
+    input: {
+      backgroundColor: '#FFC28F',
+      borderRadius: '6px',
+      width: '20vw',
+      "& label.Mui-focused": {
+        color: "#000A29",
+      },
+      "& .MuiInput-underline:after": {
+        color: '#000A29'
+      },
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          borderColor: "#000A29",
+          color: '#000A29'
+        },
+        "&:hover fieldset": {
+          borderColor: "#D76100",
+          color: '#000A29'
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: "#FFE500",
+          color: '#000A29'
+        }
+      }
+    },
+  });
 
 type EditRecipeState = {
   recipeName: string;
@@ -10,7 +82,7 @@ type EditRecipeState = {
   directions: string;
 };
 
-interface Props {
+interface Props extends WithStyles<typeof styles>{
   token: string | null;
   activeRecipe: UserRecipe;
 }
@@ -105,10 +177,13 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <form onSubmit={(e)=>this.editRecipe(e)}>
+        <h3>Edit Recipe</h3>
+        <form className={classes.form} onSubmit={(e)=>this.editRecipe(e)}>
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Recipe Name"
             variant="outlined"
@@ -116,6 +191,7 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
             onChange={(e) => this.setState({recipeName: e.target.value})}
           />
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Cuisine"
             variant="outlined"
@@ -123,6 +199,7 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
             onChange={(e) => this.setState({cuisine: e.target.value})}
           />
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Prep Time"
             variant="outlined"
@@ -131,6 +208,7 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
             onChange={(e) => this.setPrepTime(e.target.value)}
           />
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Cook Time"
             variant="outlined"
@@ -139,13 +217,14 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
             onChange={(e) => this.setCookTime(e.target.value)}
           />
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Directions"
             variant="outlined"
             value={this.state.directions}
             onChange={(e) => this.setState({directions: e.target.value})}
           />
-          <Button type="submit" variant="contained">
+          <Button className={classes.button} type="submit" variant="contained">
             Submit Changes
           </Button>
         </form>
@@ -154,4 +233,4 @@ class EditRecipeIndex extends Component<Props, EditRecipeState> {
   }
 }
 
-export default EditRecipeIndex;
+export default withStyles(styles)(EditRecipeIndex);

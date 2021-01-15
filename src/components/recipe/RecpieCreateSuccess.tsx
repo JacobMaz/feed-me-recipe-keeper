@@ -1,6 +1,7 @@
-import GetRecipeIndex from './GetRecipeIndex';
 import {Container} from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom';
+import smallFeedMeLogo from '../../assets/smallfeedmelogo.png'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -19,11 +20,19 @@ const useStyles = makeStyles(() =>
             display: 'flex',
                 alignItems:'center',
                 flexDirection:'column',
-                justifyContent: 'space-between',
+                justifyContent: 'space-evenly',
         },
         title: {
             color: '#FFAE6C',
-        }
+        },
+        p: {
+            color: '#FFAE6C',
+            fontSize: '20px'
+        },
+        feedMeLogo: {
+            height: '4em',
+            width:  '4em'
+        },
     }),
 );
 
@@ -34,7 +43,8 @@ const RecipeSuccess = () => {
         <Container className={classes.container}>
             <div className={classes.successDiv}>
                <h1 className={classes.title}>Success!</h1>
-               <p>You successfully created a Recipe!</p>
+               <p className={classes.p}>You successfully created a Recipe!</p>
+               <Link to='/'><img src={smallFeedMeLogo} alt={'FM'} className={classes.feedMeLogo}/></Link>
             </div>
         </Container>
     )

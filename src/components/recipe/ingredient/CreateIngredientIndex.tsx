@@ -13,11 +13,71 @@ import APIURL from "../../../helpers/environment";
 const styles = (theme: Theme) =>
   createStyles({
     formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
+      backgroundColor: '#FFC28F',
+      borderRadius: '6px',
+      width: '20vw',
+      "& label.Mui-focused": {
+        color: "#000A29",
+      },
+      "& .MuiInput-underline:after": {
+        color: '#000A29'
+      },
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          borderColor: "#000A29",
+          color: '#000A29'
+        },
+        "&:hover fieldset": {
+          borderColor: "#D76100",
+          color: '#000A29'
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: "#FFE500",
+          color: '#000A29'
+        }
+      }
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
+    },
+    form: {
+      height: '20em',
+      display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-evenly'
+    },
+    button: {
+      backgroundColor: '#000A29',
+      color: '#FFAE6C',
+      '&:hover': {
+          backgroundColor: '#DF6400',
+        },
+    },
+    input: {
+      backgroundColor: '#FFC28F',
+      borderRadius: '6px',
+      width: '20vw',
+      "& label.Mui-focused": {
+        color: "#000A29",
+      },
+      "& .MuiInput-underline:after": {
+        color: '#000A29'
+      },
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          borderColor: "#000A29",
+          color: '#000A29'
+        },
+        "&:hover fieldset": {
+          borderColor: "#D76100",
+          color: '#000A29'
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: "#FFE500",
+          color: '#000A29'
+        }
+      }
     },
   });
 
@@ -132,26 +192,30 @@ class CreateIngredientIndex extends Component<Props, IngredientState> {
     const { classes } = this.props;
     return (
       <div>
-        <form onSubmit={(e)=>this.createIngredient(e)}>
+        <form className={classes.form} onSubmit={(e)=>this.createIngredient(e)}>
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Ingredient Name"
             variant="outlined"
             onChange={(e) => this.setState({name: e.target.value})}
           />
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="Quantity"
             variant="outlined"
+            type='number'
             onChange={(e) => this.setQuantity(e.target.value)}
           />
           <TextField
+            className={classes.input}
             id="outlined-basic"
             label="measurement"
             variant="outlined"
             onChange={(e) => this.setMeasurement(e.target.value)}
           />
-          <FormControl variant="filled" className={classes.formControl}>
+          <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel id="demo-simple-select-filled-label">Type</InputLabel>
             <Select
               labelId="demo-simple-select-filled-label"
@@ -169,7 +233,7 @@ class CreateIngredientIndex extends Component<Props, IngredientState> {
               <MenuItem value='Baking'>Baking</MenuItem>
             </Select>
           </FormControl>
-          <Button type='submit' variant='contained' >Add Ingredient</Button>
+          <Button className={classes.button} type='submit' variant='contained' >Add Ingredient</Button>
         </form>
       </div>
     );

@@ -1,5 +1,5 @@
-import React from 'react'
 import CreateIngredientIndex from './CreateIngredientIndex';
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 
 interface Props {
     token: string | null
@@ -43,11 +43,29 @@ interface UserRecipe {
     createdAt: string;
     updatedAt: string;
   }
+  
+  const useStyles = makeStyles(() =>
+    createStyles({
+        container: {
+            display: 'flex',
+                flexDirection: 'column',
+                alignContent: 'center',
+                justifyContent: 'space-evenly',
+            border: '5px solid #FFAE6C',
+            borderRadius: '5px',
+        },
+        title: {
+            marginTop: '0',
+        }
+    }),
+);
 
 const CreateIngredient = (props: Props) => {
+  const classes = useStyles();
 
     return (
-            <div>
+            <div className={classes.container}>
+                <h3 className={classes.title}>Add Ingredient</h3>
                 <CreateIngredientIndex activeRecipe={props.activeRecipe} token={props.token} />
             </div>
     )
