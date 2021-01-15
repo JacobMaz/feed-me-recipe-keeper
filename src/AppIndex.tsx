@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Main from './components/Main';
 import Props from './components/interface/Props'
 import Token from './components/interface/TokenProp'
-import Home from './components/Home';
+
 
 export default class AppIndex extends Component<{}, Token>{
     constructor(props: Props){
@@ -44,10 +44,6 @@ export default class AppIndex extends Component<{}, Token>{
             role: ''
         })
     }
-
-    // componentDidMount(){
-    //     // return <Home />
-    // }
 
     render() {
         return (

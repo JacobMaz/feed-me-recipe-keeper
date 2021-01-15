@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TextField, Button} from '@material-ui/core';
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 import APIURL from '../../helpers/environment';
-import { Home } from '@material-ui/icons';
+import {Redirect} from 'react-router-dom';
 
 interface SignUpState {
     firstName: string,
@@ -10,6 +10,7 @@ interface SignUpState {
     userName: string,
     email: string,
     password: string,
+    redirect: string
 }
 
 const styles =()=>
@@ -70,6 +71,7 @@ class SignUpIndex extends Component<UpdateToken, SignUpState>{
             userName: '',
             email: '',
             password: '',
+            redirect: '',
         }
         // this.updateToken = this.props.updateToken.bind(this)
     }
@@ -92,12 +94,20 @@ class SignUpIndex extends Component<UpdateToken, SignUpState>{
             .then((data) => {
                 this.props.updateToken(data.token);
                 this.props.updateRole(data.user.role)
-            //    console.log(data)
+                this.setState({
+                    redirect: '/'
+                })
+            })
+            .catch(err=>{
+                console.log(err)
             })
     }
 
     render() {
         const{classes} = this.props
+        if (this.state.redirect){
+            return <Redirect to={this.state.redirect}/>
+        }
         return (
             <div>
                 <form onSubmit={(e)=>this.signUpUser(e)}  className={classes.form} >
